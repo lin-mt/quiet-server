@@ -15,16 +15,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.properties;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.List;
 
-@SpringBootApplication
-public class QuietServerApplication {
+public interface EnumScanPath {
 
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
+  String getPath();
+
+  default List<String> getPaths() {
+    return List.of();
   }
-
 }

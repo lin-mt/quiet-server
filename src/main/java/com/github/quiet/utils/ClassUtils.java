@@ -15,16 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.utils;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-@SpringBootApplication
-public class QuietServerApplication {
+/**
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+public class ClassUtils {
 
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
+  private ClassUtils() {}
+
+  public static Class<?> deduceMainClass() {
+    return StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
+        .walk(ClassUtils::findMainClass)
+        .orElse(null);
   }
 
+  private static Optional<Class<?>> findMainClass(Stream<StackWalker.StackFrame> stack) {
+    return stack
+        .filter((frame) -> Objects.equals(frame.getMethodName(), "main"))
+        .findFirst()
+        .map(StackWalker.StackFrame::getDeclaringClass);
+  }
 }

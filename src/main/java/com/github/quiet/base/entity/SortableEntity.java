@@ -15,16 +15,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.base.entity;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
 
-@SpringBootApplication
-public class QuietServerApplication {
+/**
+ * 具有排序字段的实体.
+ *
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+@Getter
+@Setter
+@MappedSuperclass
+public class SortableEntity extends BaseEntity implements Sortable {
 
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
-
+  /** 序号 */
+  @Min(0)
+  @Column(name = "sort_num", nullable = false)
+  private int sortNum = 0;
 }

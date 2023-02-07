@@ -15,16 +15,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.base.entity;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+/**
+ * 父子关系.
+ *
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+public interface Parent<T> {
 
-@SpringBootApplication
-public class QuietServerApplication {
-
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
-
+  /**
+   * 获取父的ID
+   *
+   * @return 父ID
+   */
+  Long getParentId();
 }

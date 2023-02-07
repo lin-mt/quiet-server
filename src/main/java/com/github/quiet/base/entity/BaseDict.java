@@ -15,16 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.base.entity;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+/**
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+public interface BaseDict {
 
-@SpringBootApplication
-public class QuietServerApplication {
-
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
-
+  String getKey();
 }

@@ -15,16 +15,28 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.config;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication
-public class QuietServerApplication {
+/**
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+@Configuration
+@AllArgsConstructor
+public class QueryDsl {
 
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
+  @PersistenceContext
+  private final EntityManager entityManager;
+
+  @Bean
+  public JPAQueryFactory jpaQueryFactory() {
+    return new JPAQueryFactory(entityManager);
   }
 
 }

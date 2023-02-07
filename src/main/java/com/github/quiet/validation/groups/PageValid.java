@@ -15,16 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.validation.groups;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class QuietServerApplication {
-
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
-
-}
+/**
+ * 分页参数校验分组.
+ *
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+public interface PageValid {}

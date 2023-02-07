@@ -15,16 +15,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.properties;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.github.quiet.converter.EnumType;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@SpringBootApplication
-public class QuietServerApplication {
+import java.util.List;
 
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
+@Getter
+@Setter
+@ConfigurationProperties("quiet.jpa.enum")
+public class JpaEnumProperties {
 
+  private List<String> packages;
+
+  private List<EnumType> types;
 }

@@ -15,16 +15,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.base.enums;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class QuietServerApplication {
-
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
-
-}
+public interface ShortEnum extends JpaEnum<Short> {}

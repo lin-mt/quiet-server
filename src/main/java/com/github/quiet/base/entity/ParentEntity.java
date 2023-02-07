@@ -15,16 +15,24 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+package com.github.quiet.base.entity;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 
-@SpringBootApplication
-public class QuietServerApplication {
+/**
+ * 带有父子关系的实体信息.
+ *
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+@Getter
+@Setter
+@MappedSuperclass
+public class ParentEntity<T extends ParentEntity<T>> extends BaseEntity implements Parent<T> {
 
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
-
+  /** 父级ID */
+  @Column(name = "parent_id")
+  private Long parentId;
 }

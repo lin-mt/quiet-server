@@ -15,16 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet;
+/**
+ * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
+ */
+@NeverNull.ByDefault
+package com.github.quiet.converter;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class QuietServerApplication {
-
-  public static void main(String[] args) {
-    SpringApplication.run(QuietServerApplication.class, args);
-  }
-
-}
+import net.bytebuddy.utility.nullability.NeverNull;

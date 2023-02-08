@@ -15,37 +15,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+package com.github.quiet.constant.service;
 
 /**
- * Quiet 系统异常.
+ * 角色名称.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+public final class RoleNames {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
+  public static final String ROLE_PREFIX = "ROLE_";
 
-  private final String code;
+  // 为了角色名称更加直观，没有采用大写+下划线的命名风格
 
-  private final Object[] msgParam;
+  public static final String SystemAdmin = "ROLE_SystemAdmin";
 
-  @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
-  }
+  public static final String Admin = "ROLE_Admin";
+
+  public static final String ProductOwner = "ROLE_ProductOwner";
+
+  public static final String ScrumMaster = "ROLE_ScrumMaster";
+
+  private RoleNames() {}
 }

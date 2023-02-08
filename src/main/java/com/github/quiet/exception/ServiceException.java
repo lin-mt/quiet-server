@@ -17,35 +17,14 @@
 
 package com.github.quiet.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
-
 /**
- * Quiet 系统异常.
+ * 服务异常.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+public class ServiceException extends QuietException {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
-
-  private final String code;
-
-  private final Object[] msgParam;
-
-  @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
+  public ServiceException(String code, Object... msgParam) {
+    super(code, msgParam);
   }
 }

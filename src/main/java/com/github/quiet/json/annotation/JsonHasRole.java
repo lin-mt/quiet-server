@@ -15,37 +15,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.json.annotation;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Quiet 系统异常.
+ * 角色过滤.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+@Documented
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface JsonHasRole {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
-
-  private final String code;
-
-  private final Object[] msgParam;
-
-  @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
-  }
+  String value();
 }

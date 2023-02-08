@@ -15,37 +15,37 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.base.entity;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
- * Quiet 系统异常.
+ * QuietGrantedAuthority.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+@Setter
+@MappedSuperclass
+public class QuietGrantedAuthority<T extends QuietGrantedAuthority<T>> extends ParentEntity<T>
+    implements GrantedAuthority {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
-
-  private final String code;
-
-  private final Object[] msgParam;
+  /** 角色名称 */
+  @NotBlank
+  @Length(max = 30)
+  @Column(name = "role_name", nullable = false, length = 30)
+  private String roleName;
 
   @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
+  @Transient
+  public String getAuthority() {
+    return getRoleName();
   }
 }

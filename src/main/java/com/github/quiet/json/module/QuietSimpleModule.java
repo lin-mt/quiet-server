@@ -15,37 +15,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.json.module;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.github.quiet.json.modifier.QuietDeserializerModifier;
+import com.github.quiet.json.modifier.QuietSerializerModifier;
 
 /**
- * Quiet 系统异常.
+ * QuietSimpleModule.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+public class QuietSimpleModule extends SimpleModule {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
-
-  private final String code;
-
-  private final Object[] msgParam;
+  public QuietSimpleModule(String name) {
+    super(name);
+  }
 
   @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
+  public void setupModule(SetupContext context) {
+    super.setupModule(context);
+    context.addBeanDeserializerModifier(new QuietDeserializerModifier());
+    context.addBeanSerializerModifier(new QuietSerializerModifier());
   }
 }

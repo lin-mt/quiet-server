@@ -15,37 +15,31 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.handler;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.stereotype.Component;
 
 /**
- * Quiet 系统异常.
+ * 退出登录处理.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+@Component
+public class LogLogoutHandler implements LogoutHandler {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
-
-  private final String code;
-
-  private final Object[] msgParam;
+  protected final Logger logger = LoggerFactory.getLogger(getClass());
 
   @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
+  public void logout(
+      HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    if (authentication != null) {
+      logger.info("username:{} logout.", authentication.getPrincipal());
     }
-    return message;
   }
 }

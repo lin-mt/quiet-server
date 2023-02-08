@@ -15,37 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.utils;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.NonNull;
 
 /**
- * Quiet 系统异常.
+ * Spring 上下文工具.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+public class SpringUtil implements ApplicationContextAware {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
+  private static ApplicationContext applicationContext;
 
-  private final String code;
-
-  private final Object[] msgParam;
+  public static <T> T getBean(Class<T> clazz) throws BeansException {
+    return applicationContext.getBean(clazz);
+  }
 
   @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
+  public void setApplicationContext(@NonNull ApplicationContext applicationContext)
+      throws BeansException {
+    SpringUtil.applicationContext = applicationContext;
   }
 }

@@ -15,37 +15,28 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.converter;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.github.quiet.base.entity.Dict;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.convert.converter.Converter;
 
-import java.io.Serial;
-import java.util.Arrays;
+import javax.annotation.Nullable;
 
 /**
- * Quiet 系统异常.
+ * String 转数据字典.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
-
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
-
-  private final String code;
-
-  private final Object[] msgParam;
+public class StringToDictConverter implements Converter<String, Dict> {
 
   @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
+  public Dict convert(@Nullable String source) {
+    if (StringUtils.isBlank(source)) {
+      return null;
     }
-    return message;
+    Dict dict = new Dict();
+    dict.setKey(source);
+    return dict;
   }
 }

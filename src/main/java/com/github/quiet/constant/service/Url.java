@@ -15,37 +15,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+package com.github.quiet.constant.service;
 
 /**
- * Quiet 系统异常.
+ * Url 路径常量.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+public final class Url {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
+  public static final String REGISTER = "/user/registered";
 
-  private final String code;
+  public static final String LOGIN_BY_ACCOUNT = "/login/account";
 
-  private final Object[] msgParam;
+  public static final String LOGOUT = "/login/out-login";
 
-  @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
-  }
+  private Url() {}
 }

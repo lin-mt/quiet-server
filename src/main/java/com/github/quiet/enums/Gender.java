@@ -15,37 +15,22 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.enums;
 
+import com.github.quiet.base.enums.IntegerEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.Serial;
-import java.util.Arrays;
-
-/**
- * Quiet 系统异常.
- *
- * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
- */
 @Getter
 @AllArgsConstructor
-public class QuietException extends RuntimeException {
+public enum Gender implements IntegerEnum {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
+  /** 女 */
+  FEMALE(0),
 
-  private final String code;
+  /** 男 */
+  MALE(1),
+  ;
 
-  private final Object[] msgParam;
-
-  @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
-  }
+  private final Integer value;
 }

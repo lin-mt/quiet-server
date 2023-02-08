@@ -15,37 +15,22 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.exception;
+package com.github.quiet.result;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serial;
-import java.util.Arrays;
+import lombok.Data;
 
 /**
- * Quiet 系统异常.
- *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@AllArgsConstructor
-public class QuietException extends RuntimeException {
+@Data
+public class BatchResult {
 
-  @Serial
-  private static final long serialVersionUID = -9053839678620632728L;
+  /** 成功新增的数量 */
+  private Integer addNum;
 
-  private final String code;
+  /** 成功更新的数量 */
+  private Integer updateNum;
 
-  private final Object[] msgParam;
-
-  @Override
-  public String getMessage() {
-    String message = super.getMessage();
-    if (StringUtils.isBlank(message)) {
-      message = "{code='" + code + "', msg_param=" + Arrays.toString(msgParam) + '}';
-    }
-    return message;
-  }
+  /** 失败的数量 */
+  private Integer failNum;
 }

@@ -20,6 +20,7 @@ package com.github.quiet.base.dto;
 import com.github.quiet.utils.StringConverterUtil;
 import com.github.quiet.validation.groups.Create;
 import com.github.quiet.validation.groups.IdValid;
+import com.github.quiet.validation.groups.OffsetLimitValid;
 import com.github.quiet.validation.groups.PageValid;
 import com.github.quiet.validation.groups.Update;
 import jakarta.validation.Valid;
@@ -73,13 +74,13 @@ public class BaseDTO {
   private Integer pageSize;
 
   /** 跳过几条数据 */
-  @Min(value = 0L, groups = PageValid.class)
-  @NotNull(groups = PageValid.class)
+  @Min(value = 0L, groups = OffsetLimitValid.class)
+  @NotNull(groups = OffsetLimitValid.class)
   private Long offset;
 
   /** 查询几条数据 */
-  @Range(max = 300L, groups = PageValid.class)
-  @NotNull(groups = PageValid.class)
+  @Range(max = 300L, groups = OffsetLimitValid.class)
+  @NotNull(groups = OffsetLimitValid.class)
   private Long limit;
 
   private Long creator;

@@ -15,26 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.repository.system;
-
-import com.github.quiet.base.QuietRepository;
-import com.github.quiet.entity.system.QuietHoliday;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+package com.github.quiet.validation.groups;
 
 /**
- * 假期 repository.
+ * offset参数不能为null.
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Repository
-public interface QuietHolidayRepository extends QuietRepository<QuietHoliday> {
-
-  @Query(
-      value = "select * from quiet_holiday where date_format(date_info, '%Y') = :year",
-      nativeQuery = true)
-  List<QuietHoliday> findAllByYear(@Param("year") Integer year);
-}
+public interface OffsetLimitValid {}

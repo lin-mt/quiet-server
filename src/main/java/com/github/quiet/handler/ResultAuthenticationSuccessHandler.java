@@ -19,6 +19,7 @@ package com.github.quiet.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.constant.service.MessageSourceCode;
+import com.github.quiet.entity.system.QuietRole;
 import com.github.quiet.entity.system.QuietUser;
 import com.github.quiet.entity.system.QuietUserRole;
 import com.github.quiet.filter.AuthenticationToken;
@@ -40,6 +41,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -73,7 +75,9 @@ public class ResultAuthenticationSuccessHandler extends AbstractResponseJsonData
             .map(QuietUserRole::getRoleId)
             .collect(Collectors.toSet());
     if (CollectionUtils.isNotEmpty(roleIds)) {
-      quietUser.setAuthorities(roleService.findAllByIds(roleIds));
+      List<QuietRole> authorities =
+          roleService.getReachableGrantedAuthorities(roleService.findAllByIds(roleIds));
+      quietUser.setAuthorities(authorities);
     }
     String usernameTokenKey = CacheService.usernameTokenKey(quietUser.getUsername());
     AuthenticationToken token = cacheService.get(usernameTokenKey);

@@ -27,6 +27,7 @@ import com.github.quiet.manager.system.QuietDeptManager;
 import com.github.quiet.result.Result;
 import com.github.quiet.service.system.QuietDeptService;
 import com.github.quiet.service.system.QuietDeptUserService;
+import com.github.quiet.utils.EntityUtils;
 import com.github.quiet.validation.groups.Create;
 import com.github.quiet.validation.groups.IdValid;
 import com.github.quiet.validation.groups.Update;
@@ -118,8 +119,8 @@ public class QuietDeptController {
    */
   @GetMapping("/tree")
   public Result<List<QuietDeptVO>> tree() {
-    List<QuietDept> tree = deptService.tree();
-    return Result.success(deptConvert.entities2vos(tree));
+    List<QuietDept> tree = deptService.findAll();
+    return Result.success(EntityUtils.buildTreeData(deptConvert.entities2vos(tree)));
   }
 
   /**

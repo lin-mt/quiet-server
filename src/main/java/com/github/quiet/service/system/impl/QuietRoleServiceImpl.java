@@ -85,7 +85,7 @@ public class QuietRoleServiceImpl implements QuietRoleService {
   }
 
   @Override
-  public List<QuietRole> tree() {
+  public List<QuietRole> findAll() {
     return roleRepository.findAll();
   }
 

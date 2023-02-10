@@ -20,8 +20,6 @@ package com.github.quiet.base.vo;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 /**
  * 拥有父子关系且可排序的 VO.
  *
@@ -29,13 +27,9 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class ParentAndSortableVO<T> extends BaseVO {
+public class ParentAndSortableVO<T extends ParentVO<T>> extends ParentVO<T> {
 
   private int sortNum;
 
-  private Long parentId;
-
   private boolean autoSort = true;
-
-  private List<T> children;
 }

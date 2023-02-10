@@ -49,11 +49,11 @@ public interface QuietDeptService {
   QuietDept saveOrUpdate(QuietDept dept);
 
   /**
-   * 获取所有部门的树形结构信息
+   * 获取所有部门的信息
    *
    * @return 所有部门信息
    */
-  List<QuietDept> tree();
+  List<QuietDept> findAll();
 
   /**
    * 分页查询部门下的用户信息

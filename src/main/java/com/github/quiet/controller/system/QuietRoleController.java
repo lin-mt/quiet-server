@@ -23,6 +23,7 @@ import com.github.quiet.entity.system.QuietRole;
 import com.github.quiet.manager.system.QuietRoleManager;
 import com.github.quiet.result.Result;
 import com.github.quiet.service.system.QuietRoleService;
+import com.github.quiet.utils.EntityUtils;
 import com.github.quiet.validation.groups.Create;
 import com.github.quiet.validation.groups.Update;
 import com.github.quiet.vo.system.QuietRoleVO;
@@ -67,8 +68,8 @@ public class QuietRoleController {
    */
   @GetMapping("/tree")
   public Result<List<QuietRoleVO>> tree() {
-    List<QuietRole> treeRoles = roleService.tree();
-    return Result.success(roleConvert.entities2vos(treeRoles));
+    List<QuietRole> treeRoles = roleService.findAll();
+    return Result.success(EntityUtils.buildTreeData(roleConvert.entities2vos(treeRoles)));
   }
 
   /**

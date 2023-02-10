@@ -73,7 +73,7 @@ public class QuietDeptServiceImpl implements QuietDeptService {
   }
 
   @Override
-  public List<QuietDept> tree() {
+  public List<QuietDept> findAll() {
     return deptRepository.findAll();
   }
 

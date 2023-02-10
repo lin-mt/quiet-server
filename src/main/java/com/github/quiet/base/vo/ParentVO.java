@@ -20,6 +20,7 @@ package com.github.quiet.base.vo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,4 +35,19 @@ public class ParentVO<T extends ParentVO<T>> extends BaseVO {
   private Long parentId;
 
   private List<T> children;
+
+  /**
+   * 添加子级信息
+   *
+   * @param children 子级信息
+   */
+  public void addChildren(T children) {
+    if (null == getChildren()) {
+      setChildren(new ArrayList<>());
+      if (getChildren() == null) {
+        throw new IllegalStateException("设置子级信息后仍为 null");
+      }
+    }
+    getChildren().add(children);
+  }
 }

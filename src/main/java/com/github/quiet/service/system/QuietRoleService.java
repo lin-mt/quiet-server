@@ -84,11 +84,11 @@ public interface QuietRoleService extends RoleHierarchy {
   boolean existsById(Long roleId);
 
   /**
-   * 查询角色信息，以树形结构返回
+   * 查询所有角色信息
    *
-   * @return 树形结构的角色信息
+   * @return 所有角色信息
    */
-  List<QuietRole> tree();
+  List<QuietRole> findAll();
 
   /**
    * 根据角色名称查询数据

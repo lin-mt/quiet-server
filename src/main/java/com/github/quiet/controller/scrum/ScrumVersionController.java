@@ -23,6 +23,7 @@ import com.github.quiet.entity.scrum.ScrumVersion;
 import com.github.quiet.manager.scrum.ScrumVersionManager;
 import com.github.quiet.result.Result;
 import com.github.quiet.service.scrum.ScrumVersionService;
+import com.github.quiet.utils.EntityUtils;
 import com.github.quiet.validation.groups.Create;
 import com.github.quiet.validation.groups.Update;
 import com.github.quiet.vo.scrum.ScrumVersionVO;
@@ -63,7 +64,7 @@ public class ScrumVersionController {
   @GetMapping("/tree")
   public Result<List<ScrumVersionVO>> tree(@RequestParam Long projectId) {
     List<ScrumVersion> scrumVersions = versionService.list(projectId);
-    return Result.success(versionConvert.entities2vos(scrumVersions));
+    return Result.success(EntityUtils.buildTreeData(versionConvert.entities2vos(scrumVersions)));
   }
 
   /**

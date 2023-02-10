@@ -1,6 +1,8 @@
 spring:
   data:
     redis:
+      repositories:
+        enabled: false
       host: 127.0.0.1
       database: 0
       port: 6379

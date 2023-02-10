@@ -17,12 +17,14 @@
 
 package com.github.quiet.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.constant.service.MessageSourceCode;
 import com.github.quiet.result.Result;
 import com.github.quiet.utils.MessageSourceUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -35,12 +37,14 @@ import java.io.IOException;
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
+@Getter
 @Component
 @AllArgsConstructor
 public class ResultAuthenticationFailureHandler extends AbstractResponseJsonData
     implements AuthenticationFailureHandler {
 
   private final MessageSource messageSource;
+  private final ObjectMapper objectMapper;
 
   @Override
   public void onAuthenticationFailure(

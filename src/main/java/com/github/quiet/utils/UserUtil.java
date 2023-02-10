@@ -21,11 +21,11 @@ import com.github.quiet.base.entity.QuietGrantedAuthority;
 import com.github.quiet.base.entity.QuietUserDetails;
 import com.github.quiet.constant.service.MessageSourceCode;
 import com.github.quiet.constant.service.RoleNames;
+import jakarta.validation.constraints.NotNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 /**

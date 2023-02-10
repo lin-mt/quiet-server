@@ -17,12 +17,17 @@
 
 package com.github.quiet.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.constant.service.MessageSourceCode;
+import com.github.quiet.entity.system.QuietUser;
+import com.github.quiet.filter.AuthenticationToken;
 import com.github.quiet.result.Result;
+import com.github.quiet.service.app.CacheService;
 import com.github.quiet.utils.MessageSourceUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -35,12 +40,15 @@ import java.io.IOException;
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
+@Getter
 @Component
 @AllArgsConstructor
 public class ResultLogoutSuccessHandler extends AbstractResponseJsonData
     implements LogoutSuccessHandler {
 
   private final MessageSource messageSource;
+  private final ObjectMapper objectMapper;
+  private final CacheService cacheService;
 
   @Override
   public void onLogoutSuccess(
@@ -52,6 +60,13 @@ public class ResultLogoutSuccessHandler extends AbstractResponseJsonData
     success.setMessage(
         MessageSourceUtil.getMessage(
             request, messageSource, MessageSourceCode.Account.LOGOUT_SUCCESS));
+    QuietUser quietUser = (QuietUser) authentication.getPrincipal();
+    String usernameTokenKey = CacheService.usernameTokenKey(quietUser.getUsername());
+    AuthenticationToken token = cacheService.getAndDelete(usernameTokenKey);
+    if (token != null) {
+      cacheService.remove(CacheService.refreshTokenKey(token.getRefreshToken()));
+      cacheService.remove(CacheService.accessTokenKey(token.getAccessToken()));
+    }
     responseJsonData(response, success);
   }
 }

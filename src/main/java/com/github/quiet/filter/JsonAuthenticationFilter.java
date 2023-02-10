@@ -18,20 +18,18 @@
 package com.github.quiet.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.quiet.constant.service.Url;
 import com.github.quiet.handler.ResultAuthenticationFailureHandler;
 import com.github.quiet.handler.ResultAuthenticationSuccessHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,20 +37,18 @@ import java.io.InputStream;
 /**
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-
-  public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
-
-  public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
+@Slf4j
+public class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
   private final ObjectMapper objectMapper;
 
-  public AuthenticationFilter(
+  public JsonAuthenticationFilter(
       ResultAuthenticationSuccessHandler authenticationSuccessHandler,
       ResultAuthenticationFailureHandler authenticationFailureHandler,
+      AuthenticationManager authenticationManager,
       ObjectMapper objectMapper) {
     // 自定义该方式处理登录信息的登录地址，默认是 /login POST
-    super(new AntPathRequestMatcher(Url.LOGIN_BY_ACCOUNT, "POST"));
+    super(authenticationManager);
     setAuthenticationSuccessHandler(authenticationSuccessHandler);
     setAuthenticationFailureHandler(authenticationFailureHandler);
     this.objectMapper = objectMapper;
@@ -63,50 +59,21 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
       HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
     if (null != request.getContentType()
         && request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
-      UsernamePasswordAuthenticationToken authToken =
-          new UsernamePasswordAuthenticationToken("", "");
-      UserLoginParam user;
+      UsernamePasswordAuthenticationToken authToken = null;
       try (final InputStream inputStream = request.getInputStream()) {
-        user = objectMapper.readValue(inputStream, UserLoginParam.class);
+        UserLoginParam user = objectMapper.readValue(inputStream, UserLoginParam.class);
         authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-      } catch (final IOException e) {
-        logger.error(e);
-        throw new AuthenticationServiceException("Failed to read data from request", e.getCause());
+      } catch (final IOException exception) {
+        logger.error(exception);
+        authToken = new UsernamePasswordAuthenticationToken("", "");
       } finally {
         setDetails(request, authToken);
       }
       // 进行登录信息的验证
       return this.getAuthenticationManager().authenticate(authToken);
     } else {
-      if (!request.getMethod().equals("POST")) {
-        throw new AuthenticationServiceException(
-            "Authentication method not supported: " + request.getMethod());
-      }
-      String username = obtainUsername(request);
-      username = (username != null) ? username.trim() : "";
-      String password = obtainPassword(request);
-      password = (password != null) ? password : "";
-      UsernamePasswordAuthenticationToken authRequest =
-          UsernamePasswordAuthenticationToken.unauthenticated(username, password);
-      // Allow subclasses to set the "details" property
-      setDetails(request, authRequest);
-      return this.getAuthenticationManager().authenticate(authRequest);
+      return super.attemptAuthentication(request, response);
     }
-  }
-
-  @Nullable
-  protected String obtainPassword(HttpServletRequest request) {
-    return request.getParameter(SPRING_SECURITY_FORM_PASSWORD_KEY);
-  }
-
-  @Nullable
-  protected String obtainUsername(HttpServletRequest request) {
-    return request.getParameter(SPRING_SECURITY_FORM_USERNAME_KEY);
-  }
-
-  protected void setDetails(
-      HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
-    authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
   }
 
   @Data

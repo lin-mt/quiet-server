@@ -20,6 +20,7 @@ package com.github.quiet.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.result.Result;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +48,11 @@ public abstract class AbstractResponseJsonData {
       throws IOException {
     response.setContentType("application/json;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.write(new ObjectMapper().writeValueAsString(result));
+    out.write(getObjectMapper().writeValueAsString(result));
     out.flush();
     out.close();
   }
+
+  @NotNull
+  abstract ObjectMapper getObjectMapper();
 }

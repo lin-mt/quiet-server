@@ -17,6 +17,7 @@
 
 package com.github.quiet.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.constant.service.MessageSourceCode;
 import com.github.quiet.result.Result;
 import com.github.quiet.utils.MessageSourceUtil;
@@ -24,6 +25,7 @@ import com.github.quiet.utils.UserUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -36,18 +38,21 @@ import java.io.IOException;
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
+@Getter
 @Component
 @AllArgsConstructor
 public class ResultAccessDeniedHandler extends AbstractResponseJsonData
     implements AccessDeniedHandler {
 
   private final MessageSource messageSource;
+  private final ObjectMapper objectMapper;
 
   @Override
   public void handle(
       HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception)
       throws IOException {
     logger.error("用户：{} 无权限访问：{}", UserUtil.getId(), request.getRequestURI(), exception);
+    response.setStatus(403);
     Result<Object> failure = Result.failure();
     failure.setCode(MessageSourceCode.Account.NO_PERMISSION);
     failure.setMessage(

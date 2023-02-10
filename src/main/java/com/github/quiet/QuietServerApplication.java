@@ -19,12 +19,13 @@ package com.github.quiet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.github.quiet.repository")
 public class QuietServerApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(QuietServerApplication.class, args);
   }
-
 }

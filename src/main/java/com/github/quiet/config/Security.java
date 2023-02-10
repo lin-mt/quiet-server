@@ -19,16 +19,25 @@ package com.github.quiet.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.constant.service.Url;
-import com.github.quiet.filter.AuthenticationFilter;
+import com.github.quiet.filter.AuthenticationTokenFilter;
+import com.github.quiet.filter.JsonAuthenticationFilter;
 import com.github.quiet.handler.AuthenticationJsonEntryPointHandler;
 import com.github.quiet.handler.ResultAccessDeniedHandler;
 import com.github.quiet.handler.ResultAuthenticationFailureHandler;
 import com.github.quiet.handler.ResultAuthenticationSuccessHandler;
+import com.github.quiet.properties.TokenProperties;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,12 +50,15 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
  */
 @Configuration
 @AllArgsConstructor
+@EnableWebSecurity
 @EnableMethodSecurity
+@EnableConfigurationProperties(TokenProperties.class)
 public class Security {
 
+  private final AuthenticationTokenFilter authenticationTokenFilter;
   private final ResultAccessDeniedHandler accessDeniedHandler;
-  private final LogoutHandler logoutHandler;
   private final AuthenticationJsonEntryPointHandler authenticationJsonEntryPointHandler;
+  private final LogoutHandler logoutHandler;
   private final LogoutSuccessHandler logoutSuccessHandler;
   private final ResultAuthenticationSuccessHandler successHandler;
   private final ResultAuthenticationFailureHandler failureHandler;
@@ -58,14 +70,18 @@ public class Security {
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    // @formatter:off
-    http.csrf()
-        .disable()
-        .authorizeHttpRequests()
-        .anyRequest()
-        .authenticated()
+  public SecurityFilterChain quietSecurityFilterChain(
+      HttpSecurity http, AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    AuthenticationManager manager = authenticationConfiguration.getAuthenticationManager();
+    JsonAuthenticationFilter filter =
+        new JsonAuthenticationFilter(successHandler, failureHandler, manager, objectMapper);
+    http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.cors()
         .and()
+        .csrf()
+        .disable()
         .exceptionHandling()
         .authenticationEntryPoint(authenticationJsonEntryPointHandler)
         .accessDeniedHandler(accessDeniedHandler)
@@ -74,10 +90,20 @@ public class Security {
         .logoutUrl(Url.LOGOUT)
         .addLogoutHandler(logoutHandler)
         .logoutSuccessHandler(logoutSuccessHandler);
-    AuthenticationFilter loginByAccountFilter =
-        new AuthenticationFilter(successHandler, failureHandler, objectMapper);
-    // @formatter:on
-    http.addFilterAt(loginByAccountFilter, UsernamePasswordAuthenticationFilter.class);
+    http.authorizeHttpRequests()
+        .requestMatchers("/login", "/token/refresh")
+        .permitAll()
+        .anyRequest()
+        .authenticated();
     return http.build();
+  }
+
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider(
+      UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(userDetailsService);
+    provider.setPasswordEncoder(passwordEncoder);
+    return provider;
   }
 }

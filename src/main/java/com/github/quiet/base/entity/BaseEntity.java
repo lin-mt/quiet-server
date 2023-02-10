@@ -58,7 +58,7 @@ public class BaseEntity implements Serializable {
   @NotNull(groups = Update.class)
   @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "IdGenerator")
-  @GenericGenerator(name = "IdGenerator", strategy = "com.github.quiet.jpa.IdGenerator")
+  @GenericGenerator(name = "IdGenerator", strategy = "com.github.quiet.utils.IdGenerator")
   private Long id;
 
   @CreatedBy

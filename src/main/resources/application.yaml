@@ -1,6 +1,6 @@
 spring:
   config:
     import:
-      - classpath:application-common.yaml
+      - classpath:application-web.yaml
       - classpath:application-mysql.yaml
       - classpath:application-redis.yaml

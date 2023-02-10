@@ -18,10 +18,9 @@
 package com.github.quiet.converter;
 
 import com.github.quiet.base.entity.Dict;
+import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
-
-import javax.annotation.Nullable;
 
 /**
  * String 转数据字典.

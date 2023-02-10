@@ -27,6 +27,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.BooleanUtils;
@@ -35,7 +36,6 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.Pattern;
 import java.util.Collection;
 
 /**
@@ -114,7 +114,6 @@ public class QuietUserDetails extends BaseEntity implements UserDetails, Credent
 
   /** 角色集合 */
   @Transient
-  @JsonHasRole(RoleNames.Admin)
   private Collection<? extends QuietGrantedAuthority<? extends QuietGrantedAuthority<?>>>
       authorities;
 
@@ -127,21 +126,18 @@ public class QuietUserDetails extends BaseEntity implements UserDetails, Credent
 
   @Override
   @Transient
-  @JsonHasRole(RoleNames.Admin)
   public boolean isAccountNonExpired() {
     return !BooleanUtils.toBoolean(getAccountExpired());
   }
 
   @Override
   @Transient
-  @JsonHasRole(RoleNames.Admin)
   public boolean isAccountNonLocked() {
     return !BooleanUtils.toBoolean(getAccountLocked());
   }
 
   @Override
   @Transient
-  @JsonHasRole(RoleNames.Admin)
   public boolean isCredentialsNonExpired() {
     return !BooleanUtils.toBoolean(getCredentialsExpired());
   }

@@ -15,40 +15,54 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.vo.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.entity.Dict;
+import com.github.quiet.base.vo.ParentAndSortableVO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
+
 /**
+ * 需求信息.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public class ScrumDemandVO extends ParentAndSortableVO<ScrumDemandVO> {
 
-  /** 服务ID */
+  /** 需求标题 */
   @NotBlank
   @Length(max = 30)
-  private String serviceId;
+  private String title;
 
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
+  /** 需求类型 */
+  @NotNull private Dict type;
 
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
-  private String name;
+  /** 项目ID */
+  @NotNull private Long projectId;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 该需求所优化的需求ID，A需求优化了B需求，则A需求的optimizeDemandId为B需求的ID */
+  private Long optimizeDemandId;
 
-  /** 备注 */
+  /** 所属迭代ID */
+  private Long iterationId;
+
+  /** 优先级ID */
+  @NotNull private Long priorityId;
+
+  /** 需求开始时间 */
+  private LocalDateTime startTime;
+
+  /** 需求结束时间 */
+  private LocalDateTime endTime;
+
+  /** 备注信息 */
+  @Length(max = 3000)
   private String remark;
 }

@@ -15,40 +15,47 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.dto.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.annotation.ExistId;
+import com.github.quiet.base.dto.SortableDTO;
+import com.github.quiet.repository.scrum.ScrumTemplateRepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 /**
+ * 优先级.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public class ScrumPriorityDTO extends SortableDTO {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
+  /** 优先级名称 */
   @NotBlank
   @Length(max = 10)
   private String name;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 图标的十六进制颜色/arco颜色 */
+  @Length(max = 25)
+  @Pattern(
+      regexp =
+          "^(#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}))|(rgb\\(var\\(--(red|orangered|orange|gold|yellow|lime|green|cyan|blue|arcoblue|purple|pinkpurple|magenta)-([1-9]|10)\\)\\))$")
+  private String color;
 
-  /** 备注 */
+  /** 模板ID */
+  @NotNull
+  @ExistId(
+      repository = ScrumTemplateRepository.class,
+      message = "{quiet.validation.template.id.notExist}")
+  private Long templateId;
+
+  /** 备注信息 */
+  @Length(max = 100)
   private String remark;
 }

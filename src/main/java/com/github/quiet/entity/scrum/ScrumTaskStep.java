@@ -15,9 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.entity.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.entity.SortableEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,30 +28,29 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 /**
+ * 任务步骤.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+@Entity
+@Table(name = "scrum_task_step")
+public class ScrumTaskStep extends SortableEntity {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
+  /** 步骤名称 */
   @NotBlank
   @Length(max = 10)
+  @Column(name = "step_name", nullable = false, length = 10)
   private String name;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 所属模板ID */
+  @NotNull
+  @Column(name = "template_id", nullable = false)
+  private Long templateId;
 
-  /** 备注 */
+  /** 步骤备注信息 */
+  @Length(max = 30)
+  @Column(name = "remark", length = 30)
   private String remark;
 }

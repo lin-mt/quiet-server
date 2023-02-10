@@ -15,40 +15,40 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.vo.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.vo.BaseVO;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
+
 /**
+ * 项目模板.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public class ScrumTemplateVO extends BaseVO {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
+  /** 模板中的任务步骤 */
+  List<ScrumTaskStepVO> taskSteps;
 
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
+  /** 模板中的优先级配置 */
+  List<ScrumPriorityVO> priorities;
 
-  /** 名称 */
+  /** 模板名称 */
   @NotBlank
   @Length(max = 10)
   private String name;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 是否启用，true：项目可以选择该模板，false：项目新建的时候不可以选择该模块 */
+  private Boolean enabled;
 
-  /** 备注 */
+  /** 模板备注信息 */
+  @Length(max = 30)
   private String remark;
 }

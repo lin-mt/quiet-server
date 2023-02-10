@@ -17,6 +17,8 @@
 
 package com.github.quiet.utils;
 
+import com.github.quiet.base.entity.Dict;
+import com.github.quiet.base.entity.QDict;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanPath;
@@ -144,12 +146,12 @@ public class SelectBooleanBuilder extends SelectBuilder<BooleanBuilder> {
     return this;
   }
 
-  //  public SelectBooleanBuilder notNullEq(Dict dict, QDict qDict) {
-  //    if (dict != null && StringUtils.isNoneBlank(dict.getKey())) {
-  //      builder.and(qDict.eq(dict));
-  //    }
-  //    return this;
-  //  }
+  public SelectBooleanBuilder notNullEq(Dict dict, QDict qDict) {
+    if (dict != null && StringUtils.isNoneBlank(dict.getKey())) {
+      builder.and(qDict.eq(dict));
+    }
+    return this;
+  }
 
   public SelectBooleanBuilder notNullBefore(LocalDateTime param, DateTimePath<LocalDateTime> path) {
     if (param != null) {

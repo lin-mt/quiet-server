@@ -89,4 +89,5 @@ tasks.withType<JavaCompile> {
     val compilerArgs = options.compilerArgs
     compilerArgs.add("-Amapstruct.defaultComponentModel=spring")
     compilerArgs.add("-Amapstruct.unmappedTargetPolicy=IGNORE")
+    compilerArgs.add("-Xlint:unchecked")
 }

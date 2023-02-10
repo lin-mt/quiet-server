@@ -15,40 +15,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.enums;
 
-import com.github.quiet.base.dto.BaseDTO;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.github.quiet.base.enums.StringEnum;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 /**
+ * 构建工具枚举.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
-@Setter
-public class QuietDictTypeDTO extends BaseDTO {
+@AllArgsConstructor
+public enum BuildTool implements StringEnum {
+  /** maven 构建工具 */
+  MAVEN("gradle"),
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
+  /** gradle 构建工具 */
+  GRADLE("gradle");
 
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
-  private String name;
-
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
-
-  /** 备注 */
-  private String remark;
+  private final String value;
 }

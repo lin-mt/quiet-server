@@ -15,40 +15,32 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.converter.jpa;
 
-import com.github.quiet.base.dto.BaseDTO;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+import com.github.quiet.base.entity.Dict;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 /**
+ * 数据字典与数据库的转换.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@Setter
-public class QuietDictTypeDTO extends BaseDTO {
+@Converter(autoApply = true)
+public class DictStringConverter implements AttributeConverter<Dict, String> {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
+  @Override
+  public String convertToDatabaseColumn(Dict attribute) {
+    if (attribute != null) {
+      return attribute.getKey();
+    }
+    return null;
+  }
 
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
-  private String name;
-
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
-
-  /** 备注 */
-  private String remark;
+  @Override
+  public Dict convertToEntityAttribute(String dbData) {
+    Dict dict = new Dict();
+    dict.setKey(dbData);
+    return dict;
+  }
 }

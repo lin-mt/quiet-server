@@ -15,11 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.entity.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.entity.SortableEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -29,26 +31,18 @@ import org.hibernate.validator.constraints.Length;
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+@Entity
+@Table(name = "scrum_project_group")
+public class ScrumProjectGroup extends SortableEntity {
 
-  /** 服务ID */
+  /** 分组名称 */
   @NotBlank
   @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
+  @Column(name = "group_name", length = 30, nullable = false)
   private String name;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
-
   /** 备注 */
+  @Length(max = 300)
+  @Column(name = "remark", length = 300)
   private String remark;
 }

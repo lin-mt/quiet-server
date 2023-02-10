@@ -15,40 +15,61 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.vo.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.entity.Dict;
+import com.github.quiet.base.vo.SortableVO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
+import java.util.Set;
+
 /**
+ * 任务信息.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public class ScrumTaskVO extends SortableVO {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
+  /** 任务标题 */
   @NotBlank
   @Length(max = 10)
-  private String name;
+  private String title;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 任务类型 */
+  @NotNull private Dict type;
 
-  /** 备注 */
+  /** 所属需求ID */
+  @NotNull private Long demandId;
+
+  /** 任务的当前步骤ID */
+  @NotNull private Long taskStepId;
+
+  /** 执行者 */
+  @NotNull private Long executorId;
+
+  /** 参与者（最多20人参与） */
+  @Size(max = 20)
+  private Set<Long> participant;
+
+  /** 前置任务 */
+  @Size(max = 20)
+  private Set<Long> preTaskIds;
+
+  /** 任务开始时间 */
+  private LocalDateTime startTime;
+
+  /** 任务结束时间 */
+  private LocalDateTime endTime;
+
+  /** 任务备注信息 */
+  @Length(max = 3000)
   private String remark;
 }

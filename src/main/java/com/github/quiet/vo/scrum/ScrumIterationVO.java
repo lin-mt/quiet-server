@@ -15,40 +15,48 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.vo.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.vo.SortableVO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
+ * 迭代信息.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public class ScrumIterationVO extends SortableVO {
 
-  /** 服务ID */
+  /** 迭代名称 */
   @NotBlank
   @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
   private String name;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 所属版本ID */
+  @NotNull private Long versionId;
 
-  /** 备注 */
+  /** 迭代计划开始日期 */
+  @NotNull private LocalDate planStartDate;
+
+  /** 迭代计划结束日期 */
+  @NotNull private LocalDate planEndDate;
+
+  /** 迭代开始时间 */
+  private LocalDateTime startTime;
+
+  /** 迭代结束时间 */
+  private LocalDateTime endTime;
+
+  /** 备注信息 */
+  @Length(max = 1000)
   private String remark;
 }

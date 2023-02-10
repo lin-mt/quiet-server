@@ -15,40 +15,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.convert.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+import com.github.quiet.base.dto.QuietConvert;
+import com.github.quiet.dto.scrum.ScrumIterationDTO;
+import com.github.quiet.entity.scrum.ScrumIteration;
+import com.github.quiet.vo.scrum.ScrumIterationVO;
+import org.mapstruct.Mapper;
 
 /**
+ * 迭代实体信息转换.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@Setter
-public class QuietDictTypeDTO extends BaseDTO {
-
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
-  private String name;
-
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
-
-  /** 备注 */
-  private String remark;
-}
+@Mapper
+public interface ScrumIterationConvert
+    extends QuietConvert<ScrumIteration, ScrumIterationDTO, ScrumIterationVO> {}

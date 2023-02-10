@@ -15,40 +15,32 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.service.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+import com.github.quiet.entity.scrum.ScrumProjectGroup;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public interface ScrumProjectGroupService {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
+  /**
+   * 新增或更新项目分组
+   *
+   * @param entity 项目分组信息
+   * @return 新增或更新后的项目分组信息
+   */
+  ScrumProjectGroup saveOrUpdate(ScrumProjectGroup entity);
 
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
-  private String name;
-
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
-
-  /** 备注 */
-  private String remark;
+  /**
+   * 查询所有分组信息
+   *
+   * @param name 项目名称
+   * @param groupIds 项目ID集合
+   * @return 所有项目分组信息
+   */
+  List<ScrumProjectGroup> listAll(String name, Set<Long> groupIds);
 }

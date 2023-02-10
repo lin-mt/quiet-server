@@ -15,40 +15,39 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.service.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+import com.github.quiet.entity.scrum.ScrumPriority;
+
+import java.util.List;
 
 /**
+ * 优先级信息service.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public interface ScrumPriorityService {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
+  /**
+   * 根据模板ID删除优先级信息
+   *
+   * @param templateId 模板ID
+   */
+  void deleteByTemplateId(Long templateId);
 
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
+  /**
+   * 根据模板ID查询优先级配置信息
+   *
+   * @param templateId 模板ID
+   * @return 模板ID下的所有优先级配置信息
+   */
+  List<ScrumPriority> list(Long templateId);
 
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
-  private String name;
-
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
-
-  /** 备注 */
-  private String remark;
+  /**
+   * 根据模板ID统计优先级数量
+   *
+   * @param templateId 模板ID
+   * @return 优先级数量
+   */
+  long countByTemplateId(Long templateId);
 }

@@ -15,9 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.vo.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.vo.SortableVO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,30 +25,23 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 /**
+ * 任务步骤.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public class ScrumTaskStepVO extends SortableVO {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
+  /** 步骤名称 */
   @NotBlank
   @Length(max = 10)
   private String name;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 所属模板ID */
+  @NotNull private Long templateId;
 
-  /** 备注 */
+  /** 步骤备注信息 */
+  @Length(max = 30)
   private String remark;
 }

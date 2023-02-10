@@ -15,40 +15,42 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.service.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
-import jakarta.validation.constraints.NotBlank;
+import com.github.quiet.entity.scrum.ScrumIteration;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
+import java.util.Set;
 
 /**
+ * 迭代信息service.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-@Getter
-@Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public interface ScrumIterationService {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
+  /**
+   * 根据版本ID集合批量查询迭代信息
+   *
+   * @param versionIds 要查询的版本ID集合
+   * @return 指定版本中所有的迭代信息
+   */
+  List<ScrumIteration> findAllByVersionIds(Set<Long> versionIds);
 
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
+  /**
+   * 根据版本ID统计处于该版本下有多少迭代数量
+   *
+   * @param versionId 版本ID
+   * @return 处于该版本下的迭代数量
+   */
+  long countByVersionId(@NotNull Long versionId);
 
-  /** 名称 */
-  @NotBlank
-  @Length(max = 10)
-  private String name;
-
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
-
-  /** 备注 */
-  private String remark;
+  /**
+   * 根据id查询迭代信息
+   *
+   * @param id 迭代id
+   * @return 迭代信息
+   */
+  ScrumIteration getById(Long id);
 }

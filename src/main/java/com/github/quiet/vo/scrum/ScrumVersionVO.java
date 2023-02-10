@@ -15,40 +15,52 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.quiet.dto.system;
+package com.github.quiet.vo.scrum;
 
-import com.github.quiet.base.dto.BaseDTO;
+import com.github.quiet.base.vo.ParentAndSortableVO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
+ * 项目的版本信息.
+ *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Getter
 @Setter
-public class QuietDictTypeDTO extends BaseDTO {
+public class ScrumVersionVO extends ParentAndSortableVO<ScrumVersionVO> {
 
-  /** 服务ID */
-  @NotBlank
-  @Length(max = 30)
-  private String serviceId;
-
-  /** key */
-  @NotBlank
-  @Length(max = 30)
-  private String key;
-
-  /** 名称 */
+  /** 版本名称 */
   @NotBlank
   @Length(max = 10)
   private String name;
 
-  /** 是否启用 */
-  @NotNull private Boolean enabled;
+  /** 所属项目ID */
+  @NotNull private Long projectId;
 
-  /** 备注 */
+  /** 计划开始日期 */
+  @NotNull private LocalDate planStartDate;
+
+  /** 计划结束日期 */
+  @NotNull private LocalDate planEndDate;
+
+  /** 版本开始时间 */
+  private LocalDateTime startTime;
+
+  /** 版本结束时间 */
+  private LocalDateTime endTime;
+
+  /** 版本备注信息 */
+  @Length(max = 1500)
   private String remark;
+
+  /** 迭代信息 */
+  private List<ScrumIterationVO> iterations;
 }

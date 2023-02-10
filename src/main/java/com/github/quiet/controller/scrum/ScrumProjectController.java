@@ -47,7 +47,7 @@ import java.util.List;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/project")
+@RequestMapping("/scrum/project")
 public class ScrumProjectController {
 
   private final ScrumProjectService projectService;

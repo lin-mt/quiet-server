@@ -47,6 +47,7 @@ var okhttpVersion = "4.10.0"
 var blazePersistenceVersion = "1.6.8"
 var swaggerParserVersion = "2.1.11"
 var minioVersion = "8.5.1"
+var hypersistenceUtilsVersion = "3.1.2"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -66,6 +67,7 @@ dependencies {
     implementation("io.swagger.parser.v3:swagger-parser:${swaggerParserVersion}")
     implementation("org.apache.commons:commons-collections4:${commonsCollections4Version}")
     implementation("com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:${jacksonModuleJakartaXmlbindAnnotationsVersion}")
+    implementation("io.hypersistence:hypersistence-utils-hibernate-60:${hypersistenceUtilsVersion}")
     compileOnly("org.projectlombok:lombok")
     compileOnly("com.blazebit:blaze-persistence-core-api-jakarta:${blazePersistenceVersion}")
     compileOnly("com.blazebit:blaze-persistence-integration-querydsl-expressions-jakarta:${blazePersistenceVersion}")

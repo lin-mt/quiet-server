@@ -25,12 +25,20 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 /**
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
 @Configuration
 public class Application {
+
+  @Bean
+  public ThreadPoolTaskScheduler getTaskScheduler() {
+    ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+    taskScheduler.setPoolSize(10);
+    return taskScheduler;
+  }
 
   @Bean
   public SpringUtil springUtil() {

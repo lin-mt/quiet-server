@@ -46,7 +46,7 @@ import java.util.Set;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/project-group")
+@RequestMapping("/scrum/project-group")
 public class ScrumProjectGroupController {
   private final ScrumProjectGroupService projectGroupService;
   private final ScrumProjectGroupManager projectGroupManager;

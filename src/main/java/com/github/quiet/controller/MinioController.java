@@ -29,6 +29,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,6 +58,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 @RestController
 @AllArgsConstructor
+@ConditionalOnBean({MinioService.class, MinioProperties.class})
 @RequestMapping("/minio")
 public class MinioController {
 

@@ -30,6 +30,7 @@ import io.minio.messages.Tags;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -41,6 +42,7 @@ import java.util.Map;
  */
 @Service
 @AllArgsConstructor
+@ConditionalOnBean({MinioClient.class, MinioProperties.class})
 public class MinioService {
 
   private final MinioClient minioClient;

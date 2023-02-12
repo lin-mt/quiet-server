@@ -1,5 +1,6 @@
 quiet:
   minio:
+    url: http://localhost:7000
     bucket-name: quiet-server
     access-key: 65mtumFyO3xMpUyP
     secret-key: sXBTjKmCtWf8iwOiy8Uw3fCOhe8ibuGV

@@ -29,6 +29,7 @@ import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,9 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 @Configuration
 @AllArgsConstructor
+@ConditionalOnProperty(
+    prefix = "quiet.minio",
+    name = {"url", "bucket-name", "access-key", "secret-key", "object-prefix"})
 @EnableConfigurationProperties(MinioProperties.class)
 public class Minio {
 

@@ -5,9 +5,3 @@ spring:
     locale: zh_CN
     time-zone: GMT+8
     property-naming-strategy: SNAKE_CASE
-quiet:
-  web:
-    controller-prefix-configs:
-#      -
-#        prefix: 'system'
-#        pattern: '**.controller.system.*'

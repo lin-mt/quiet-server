@@ -4,3 +4,4 @@ spring:
       - classpath:application-web.yaml
       - classpath:application-mysql.yaml
       - classpath:application-redis.yaml
+      - classpath:application-minio.yaml

@@ -1,0 +1,8 @@
+quiet:
+  minio:
+    bucket-name: quiet-server
+    access-key: 65mtumFyO3xMpUyP
+    secret-key: sXBTjKmCtWf8iwOiy8Uw3fCOhe8ibuGV
+    object-prefix: http://localhost:8080
+    classifications:
+      - doc/api/remark

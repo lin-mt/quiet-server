@@ -91,7 +91,7 @@ public class Security {
         .addLogoutHandler(logoutHandler)
         .logoutSuccessHandler(logoutSuccessHandler);
     http.authorizeHttpRequests()
-        .requestMatchers("/login", "/token/refresh")
+        .requestMatchers("/login", "/token/refresh", "/minio/**")
         .permitAll()
         .anyRequest()
         .authenticated();

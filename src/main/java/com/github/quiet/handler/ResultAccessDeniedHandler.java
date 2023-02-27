@@ -20,7 +20,6 @@ package com.github.quiet.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.constant.service.MessageSourceCode;
 import com.github.quiet.result.Result;
-import com.github.quiet.utils.MessageSourceUtil;
 import com.github.quiet.utils.UserUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -55,9 +54,7 @@ public class ResultAccessDeniedHandler extends AbstractResponseJsonData
     response.setStatus(403);
     Result<Object> failure = Result.failure();
     failure.setCode(MessageSourceCode.Account.NO_PERMISSION);
-    failure.setMessage(
-        MessageSourceUtil.getMessage(
-            request, messageSource, MessageSourceCode.Account.NO_PERMISSION));
+    failure.setMessage(getMessage(request, messageSource, MessageSourceCode.Account.NO_PERMISSION));
     responseJsonData(response, failure);
   }
 }

@@ -28,7 +28,6 @@ import com.github.quiet.result.Result;
 import com.github.quiet.service.app.CacheService;
 import com.github.quiet.service.system.QuietRoleService;
 import com.github.quiet.service.system.QuietUserRoleService;
-import com.github.quiet.utils.MessageSourceUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -100,9 +99,7 @@ public class ResultAuthenticationSuccessHandler extends AbstractResponseJsonData
     Result<Object> success = Result.success();
     success.setCode(MessageSourceCode.Account.LOGIN_SUCCESS);
     success.setData(token);
-    success.setMessage(
-        MessageSourceUtil.getMessage(
-            request, messageSource, MessageSourceCode.Account.LOGIN_SUCCESS));
+    success.setMessage(getMessage(request, messageSource, MessageSourceCode.Account.LOGIN_SUCCESS));
     responseJsonData(response, success);
   }
 

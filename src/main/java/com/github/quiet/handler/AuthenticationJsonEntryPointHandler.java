@@ -20,7 +20,6 @@ package com.github.quiet.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.quiet.constant.service.MessageSourceCode;
 import com.github.quiet.result.Result;
-import com.github.quiet.utils.MessageSourceUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -55,8 +54,7 @@ public class AuthenticationJsonEntryPointHandler extends AbstractResponseJsonDat
     logger.error("认证失败", authException);
     Result<Object> failure = Result.failure();
     failure.setCode(MessageSourceCode.Account.NO_LOGIN);
-    failure.setMessage(
-        MessageSourceUtil.getMessage(request, messageSource, MessageSourceCode.Account.NO_LOGIN));
+    failure.setMessage(getMessage(request, messageSource, MessageSourceCode.Account.NO_LOGIN));
     response.setStatus(401);
     responseJsonData(response, failure);
   }

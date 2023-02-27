@@ -18,6 +18,7 @@
 package com.github.quiet.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.quiet.base.quiet.QuietMessage;
 import com.github.quiet.result.Result;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
@@ -32,7 +33,7 @@ import java.io.PrintWriter;
  *
  * @author <a href="mailto:lin-mt@outlook.com">lin-mt</a>
  */
-public abstract class AbstractResponseJsonData {
+public abstract class AbstractResponseJsonData implements QuietMessage {
 
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 

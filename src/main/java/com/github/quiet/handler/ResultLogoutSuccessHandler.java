@@ -23,7 +23,6 @@ import com.github.quiet.entity.system.QuietUser;
 import com.github.quiet.filter.AuthenticationToken;
 import com.github.quiet.result.Result;
 import com.github.quiet.service.app.CacheService;
-import com.github.quiet.utils.MessageSourceUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -56,10 +55,9 @@ public class ResultLogoutSuccessHandler extends AbstractResponseJsonData
       throws IOException {
     logger.info("用户退出登录成功：{}", authentication);
     Result<Object> success = Result.success();
+    String message = getMessage(request, messageSource, MessageSourceCode.Account.LOGOUT_SUCCESS);
     success.setCode(MessageSourceCode.Account.LOGOUT_SUCCESS);
-    success.setMessage(
-        MessageSourceUtil.getMessage(
-            request, messageSource, MessageSourceCode.Account.LOGOUT_SUCCESS));
+    success.setMessage(message);
     QuietUser quietUser = (QuietUser) authentication.getPrincipal();
     String usernameTokenKey = CacheService.usernameTokenKey(quietUser.getUsername());
     AuthenticationToken token = cacheService.getAndDelete(usernameTokenKey);

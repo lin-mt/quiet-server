@@ -60,4 +60,20 @@ public class ProjectManager {
     projectService.deleteById(id);
     projectUserService.deleteByProjectId(id);
   }
+
+  public Long save(Project project) {
+    Long id = project.getId();
+    if (id != null) {
+      Project exist = projectService.getById(id);
+      if (!exist.getTemplateId().equals(project.getTemplateId())) {
+        // TODO 任务移动
+      }
+      boolean reBuild = !exist.getGitAddress().equalsIgnoreCase(project.getGitAddress()) ||
+          !exist.getBuildTool().equals(project.getBuildTool());
+      if (reBuild) {
+        // TODO 重新构建文档等数据
+      }
+    }
+    return projectService.save(project);
+  }
 }

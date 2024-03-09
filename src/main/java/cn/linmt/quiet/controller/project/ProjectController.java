@@ -30,7 +30,7 @@ public class ProjectController {
   public Long addProject(@RequestBody AddProject project) {
     Project save = new Project();
     BeanUtils.copyProperties(project, save);
-    return projectService.save(save);
+    return projectManager.save(save);
   }
 
   @PutMapping
@@ -38,7 +38,7 @@ public class ProjectController {
   public Long updateProject(@RequestBody UpdateProject project) {
     Project update = new Project();
     BeanUtils.copyProperties(project, update);
-    return projectService.save(update);
+    return projectManager.save(update);
   }
 
   @PutMapping("/members")

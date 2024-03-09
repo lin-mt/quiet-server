@@ -8,6 +8,7 @@ import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.ProjectRepository;
 import com.querydsl.core.BooleanBuilder;
 import java.util.List;
+import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,6 @@ import org.springframework.stereotype.Service;
 public class ProjectService {
 
   private final ProjectRepository repository;
-
-  public Long save(Project save) {
-    Project exist = repository.findByNameIgnoreCase(save.getName());
-    if (exist != null && !exist.getId().equals(save.getId())) {
-      Result.PRO_NAME_EXIST.thr();
-    }
-    return repository.saveAndFlush(save).getId();
-  }
 
   public Project getById(Long id) {
     return repository.findById(id).orElseThrow(Result.PRO_NOT_EXIST::exc);
@@ -50,5 +43,19 @@ public class ProjectService {
 
   public List<Project> listByGroupId(Long id) {
     return repository.findByProjectGroupId(id);
+  }
+
+  public List<Project> listByTemplateId(Long templateId) {
+    return StreamSupport.stream(
+            repository.findAll(QProject.project.templateId.eq(templateId)).spliterator(), false)
+        .toList();
+  }
+
+  public Long save(Project project) {
+    Project exist = repository.findByNameIgnoreCase(project.getName());
+    if (exist != null && !exist.getId().equals(project.getId())) {
+      Result.PRO_NAME_EXIST.thr();
+    }
+    return repository.saveAndFlush(project).getId();
   }
 }

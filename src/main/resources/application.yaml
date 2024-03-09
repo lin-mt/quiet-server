@@ -3,6 +3,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/quiet
     username: root
     password: KV753t0PpVmpjd2d
+    hikari:
+      auto-commit: true
   jpa:
     hibernate:
       ddl-auto: update

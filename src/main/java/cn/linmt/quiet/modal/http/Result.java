@@ -35,6 +35,7 @@ public enum Result {
   /** 104xxx 项目模板 */
   TEMPLATE_NOT_EXIST(104000, "该模板不存在", MessageType.ERROR_MESSAGE),
   TEMPLATE_NAME_EXIST(104001, "该模板名称已存在", MessageType.WARN_MESSAGE),
+  TEMPLATE_CNT_DEL_PROJECT(104002, "有项目使用该模板，无法删除", MessageType.WARN_MESSAGE),
   /** 105xxx 任务步骤 */
   TASK_STEP_NAME_REPEAT(105000, "步骤名称出现重复", MessageType.WARN_MESSAGE),
   /** 106xxx 需求优先级 */
@@ -42,7 +43,8 @@ public enum Result {
   /** 107xxx 项目组 */
   PRO_GROUP_NOT_EXIST(107001, "项目组不存在", MessageType.ERROR_MESSAGE),
   PRO_GROUP_NAME_EXIST(107001, "项目组名已存在", MessageType.WARN_MESSAGE),
-  PRO_GROUP_CANT_DELETE_PROJECTS(107002, "项目组下存在项目，无法删除", MessageType.WARN_MESSAGE);
+  PRO_GROUP_CANT_DELETE_PROJECTS(107002, "项目组下存在项目，无法删除", MessageType.WARN_MESSAGE),
+  ;
 
   private final Integer code;
 

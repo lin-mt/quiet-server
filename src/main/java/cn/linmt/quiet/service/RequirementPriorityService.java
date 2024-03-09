@@ -48,4 +48,8 @@ public class RequirementPriorityService {
   public List<RequirementPriority> listByTemplateId(Long id) {
     return repository.findByTemplateId(id);
   }
+
+  public void deleteByTemplateId(Long templateId) {
+    repository.deleteByTemplateId(templateId);
+  }
 }

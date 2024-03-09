@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TaskStepRepository extends QuietRepository<TaskStep> {
   List<TaskStep> findByTemplateId(Long templateId);
+
+  void deleteByTemplateId(Long templateId);
 }

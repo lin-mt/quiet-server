@@ -3,10 +3,7 @@ package cn.linmt.quiet.controller.template;
 import cn.linmt.quiet.controller.template.dto.AddTemplate;
 import cn.linmt.quiet.controller.template.dto.TemplateInfo;
 import cn.linmt.quiet.controller.template.dto.UpdateTemplate;
-import cn.linmt.quiet.controller.template.vo.RequirementPriorityVO;
-import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
-import cn.linmt.quiet.controller.template.vo.TaskStepVO;
-import cn.linmt.quiet.controller.template.vo.TemplateDetail;
+import cn.linmt.quiet.controller.template.vo.*;
 import cn.linmt.quiet.entity.RequirementPriority;
 import cn.linmt.quiet.entity.TaskStep;
 import cn.linmt.quiet.entity.Template;
@@ -19,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,6 +39,25 @@ public class TemplateController {
   @Operation(summary = "更新模板")
   public Long updateTemplate(@RequestBody UpdateTemplate template) {
     return saveTemplate(template);
+  }
+
+  @DeleteMapping("/{id}")
+  @Operation(summary = "删除模板")
+  public void deleteTemplate(@PathVariable Long id) {
+    templateManager.delete(id);
+  }
+
+  @GetMapping("/page")
+  @Operation(summary = "分页查询模板")
+  public Page<TemplateVO> pageTemplate(PageTemplate pageTemplate) {
+    return templateService
+        .page(pageTemplate)
+        .map(
+            template -> {
+              TemplateVO vo = new TemplateVO();
+              BeanUtils.copyProperties(template, vo);
+              return vo;
+            });
   }
 
   @GetMapping("/list")

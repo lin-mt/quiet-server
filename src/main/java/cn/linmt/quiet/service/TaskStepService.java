@@ -48,4 +48,8 @@ public class TaskStepService {
   public List<TaskStep> listByTemplateId(Long id) {
     return repository.findByTemplateId(id);
   }
+
+  public void deleteByTemplateId(Long templateId) {
+    repository.deleteByTemplateId(templateId);
+  }
 }

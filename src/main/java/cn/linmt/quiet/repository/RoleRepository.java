@@ -5,9 +5,7 @@ import cn.linmt.quiet.framework.QuietRepository;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface RoleRepository extends QuietRepository<Role> {
   List<Role> findByCodeIn(Collection<String> code);
 

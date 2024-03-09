@@ -29,9 +29,16 @@ public enum Result {
   PER_NOT_EXIST(102002, "权限信息不存在", MessageType.ERROR_MESSAGE),
   PER_CANT_DEL_PAR(102003, "存在子权限信息，无法删除", MessageType.WARN_MESSAGE),
   PER_PARENT_CANT_SELF(102004, "权限的父权限不能为权限本身", MessageType.ERROR_MESSAGE),
+  /** 103xxx 项目 */
   PRO_NOT_EXIST(103000, "该项目不存在", MessageType.ERROR_MESSAGE),
   PRO_NAME_EXIST(103001, "该项目名称已存在", MessageType.WARN_MESSAGE),
-  ;
+  /** 104xxx 项目模板 */
+  TEMPLATE_NOT_EXIST(104000, "该模板不存在", MessageType.ERROR_MESSAGE),
+  TEMPLATE_NAME_EXIST(104001, "该模板名称已存在", MessageType.WARN_MESSAGE),
+  /** 105xxx 任务步骤 */
+  TASK_STEP_NAME_REPEAT(105000, "步骤名称出现重复", MessageType.WARN_MESSAGE),
+  /** 106xxx 需求优先级 */
+  REQ_PRIORITY_NAME_REPEAT(106000, "优先级名称出现重复", MessageType.WARN_MESSAGE);
 
   private final Integer code;
 

@@ -16,8 +16,16 @@ import org.hibernate.annotations.Comment;
 public class Project extends BaseEntity {
 
   @Comment("项目名称")
-  @Column(name = "p_name", length = 50, nullable = false)
+  @Column(name = "p_name", length = 30, nullable = false)
   private String name;
+
+  @Comment("模板ID")
+  @Column(name = "template_id", nullable = false)
+  private Long templateId;
+
+  @Comment("项目组ID")
+  @Column(name = "project_group_id", nullable = false)
+  private Long projectGroupId;
 
   @Comment("构建工具")
   @Column(name = "build_tool", nullable = false)

@@ -11,7 +11,7 @@ public record UpdateRole(
     @Schema(description = "主键ID") @NotNull Long id,
     @Schema(description = "排序值") @Min(0) int ordinal,
     @Schema(description = "父角色ID") Long parentId,
-    @Schema(description = "角色名称") @NotBlank @Length(max = 16) String name,
+    @Schema(description = "角色名称") @NotBlank @Length(max = 30) String name,
     @Schema(description = "角色值") @NotBlank @Length(max = 32) String value,
     @Schema(description = "角色编码") @NotBlank @Length(max = 32) String code)
     implements Serializable {}

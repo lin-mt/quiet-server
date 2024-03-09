@@ -4,6 +4,7 @@ import cn.linmt.quiet.controller.template.dto.AddTemplate;
 import cn.linmt.quiet.controller.template.dto.TemplateInfo;
 import cn.linmt.quiet.controller.template.dto.UpdateTemplate;
 import cn.linmt.quiet.controller.template.vo.RequirementPriorityVO;
+import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
 import cn.linmt.quiet.controller.template.vo.TaskStepVO;
 import cn.linmt.quiet.controller.template.vo.TemplateDetail;
 import cn.linmt.quiet.entity.RequirementPriority;
@@ -14,6 +15,7 @@ import cn.linmt.quiet.service.RequirementPriorityService;
 import cn.linmt.quiet.service.TaskStepService;
 import cn.linmt.quiet.service.TemplateService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +41,21 @@ public class TemplateController {
   @Operation(summary = "更新模板")
   public Long updateTemplate(@RequestBody UpdateTemplate template) {
     return saveTemplate(template);
+  }
+
+  @GetMapping("/list")
+  @Operation(summary = "查询模板")
+  public List<SimpleTemplate> listTemplate(
+      @RequestParam(required = false) @Schema(description = "模板名称") String name) {
+    return templateService.listTemplate(name).stream()
+        .map(
+            template -> {
+              SimpleTemplate simpleTemplate = new SimpleTemplate();
+              simpleTemplate.setId(template.getId());
+              simpleTemplate.setName(template.getName());
+              return simpleTemplate;
+            })
+        .toList();
   }
 
   @GetMapping("/{id}")

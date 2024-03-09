@@ -1,8 +1,8 @@
 package cn.linmt.quiet.controller.permission.dto;
 
-import cn.linmt.quiet.controller.PageFilter;
 import cn.linmt.quiet.enums.HttpMethod;
 import cn.linmt.quiet.enums.PermissionType;
+import cn.linmt.quiet.modal.http.PageFilter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

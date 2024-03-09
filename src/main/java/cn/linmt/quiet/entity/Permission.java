@@ -20,7 +20,7 @@ import org.hibernate.annotations.Comment;
 public class Permission extends ParentAndSortableEntity {
 
   @Comment("权限名称")
-  @Column(name = "p_name", nullable = false, length = 16)
+  @Column(name = "p_name", nullable = false, length = 30)
   private String name;
 
   @Comment("权限类型")

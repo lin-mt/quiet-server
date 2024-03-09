@@ -18,7 +18,7 @@ import org.hibernate.annotations.Comment;
 public class User extends BaseEntity {
 
   @Comment("用户名")
-  @Column(name = "username", nullable = false, length = 16)
+  @Column(name = "username", nullable = false, length = 30)
   private String username;
 
   @Comment("密码")

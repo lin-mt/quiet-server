@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 public class UserDTO {
 
   @NotBlank
-  @Length(max = 16)
+  @Length(max = 30)
   @Schema(title = "用户名", example = "admin")
   private String username;
 

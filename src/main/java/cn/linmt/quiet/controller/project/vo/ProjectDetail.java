@@ -1,5 +1,7 @@
 package cn.linmt.quiet.controller.project.vo;
 
+import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
+import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
 import cn.linmt.quiet.enums.BuildTool;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +21,14 @@ public class ProjectDetail {
   @Length(max = 30)
   @Schema(description = "项目名称")
   private String name;
+
+  @NotNull
+  @Schema(description = "所属项目组")
+  private SimpleProjectGroup projectGroup;
+
+  @NotNull
+  @Schema(description = "项目模板")
+  private SimpleTemplate template;
 
   @NotNull
   @Schema(description = "构建工具")

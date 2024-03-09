@@ -20,6 +20,14 @@ public class ProjectVO {
   private String name;
 
   @NotNull
+  @Schema(description = "模板ID")
+  private Long templateId;
+
+  @NotNull
+  @Schema(description = "项目组ID")
+  private Long projectGroupId;
+
+  @NotNull
   @Schema(description = "构建工具")
   private BuildTool buildTool;
 

@@ -18,7 +18,7 @@ import org.hibernate.annotations.Comment;
 public class Role extends ParentAndSortableEntity {
 
   @Comment("角色名称")
-  @Column(name = "role_name", nullable = false, length = 16)
+  @Column(name = "role_name", nullable = false, length = 30)
   private String name;
 
   @Comment("角色值")

@@ -7,6 +7,7 @@ import cn.linmt.quiet.framework.Where;
 import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.ProjectRepository;
 import com.querydsl.core.BooleanBuilder;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,9 @@ public class ProjectService {
             .notBlankContains(filter.getDescription(), project.description)
             .getPredicate();
     return repository.findAll(predicate, filter.pageable());
+  }
+
+  public List<Project> listByGroupId(Long id) {
+    return repository.findByProjectGroupId(id);
   }
 }

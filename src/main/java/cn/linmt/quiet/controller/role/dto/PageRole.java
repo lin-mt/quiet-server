@@ -1,6 +1,6 @@
 package cn.linmt.quiet.controller.role.dto;
 
-import cn.linmt.quiet.controller.PageFilter;
+import cn.linmt.quiet.modal.http.PageFilter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

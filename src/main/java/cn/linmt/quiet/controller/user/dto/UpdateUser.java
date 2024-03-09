@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @Schema(description = "更新用户")
@@ -16,8 +17,8 @@ public class UpdateUser {
   @Schema(description = "用户ID")
   private Long id;
 
-  @NotNull
   @NotBlank
+  @Length(max = 30)
   @Schema(description = "用户名")
   private String username;
 

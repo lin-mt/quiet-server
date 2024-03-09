@@ -13,7 +13,7 @@ public record UpdatePermission(
     @Schema(description = "主键ID") @NotNull Long id,
     @Schema(description = "排序值") @Min(0) int ordinal,
     @Schema(description = "父ID") Long parentId,
-    @Schema(description = "权限名称") @NotBlank @Length(max = 16) String name,
+    @Schema(description = "权限名称") @NotBlank @Length(max = 30) String name,
     @Schema(description = "权限类型") @NotNull PermissionType type,
     @Schema(description = "路径") @NotBlank @Length(max = 255) String path,
     @Schema(description = "值") @NotBlank @Length(max = 255) String value,

@@ -1,4 +1,4 @@
-package cn.linmt.quiet.controller;
+package cn.linmt.quiet.modal.http;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;

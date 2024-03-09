@@ -38,7 +38,11 @@ public enum Result {
   /** 105xxx 任务步骤 */
   TASK_STEP_NAME_REPEAT(105000, "步骤名称出现重复", MessageType.WARN_MESSAGE),
   /** 106xxx 需求优先级 */
-  REQ_PRIORITY_NAME_REPEAT(106000, "优先级名称出现重复", MessageType.WARN_MESSAGE);
+  REQ_PRIORITY_NAME_REPEAT(106000, "优先级名称出现重复", MessageType.WARN_MESSAGE),
+  /** 107xxx 项目组 */
+  PRO_GROUP_NOT_EXIST(107001, "项目组不存在", MessageType.ERROR_MESSAGE),
+  PRO_GROUP_NAME_EXIST(107001, "项目组名已存在", MessageType.WARN_MESSAGE),
+  PRO_GROUP_CANT_DELETE_PROJECTS(107002, "项目组下存在项目，无法删除", MessageType.WARN_MESSAGE);
 
   private final Integer code;
 

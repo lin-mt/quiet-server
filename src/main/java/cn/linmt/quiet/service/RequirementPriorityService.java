@@ -42,11 +42,13 @@ public class RequirementPriorityService {
         // TODO 将删除的优先级下的需求移动到上一个优先级，上一个优先级不存在则移动到下一个优先级
       }
     }
-    repository.saveAll(priorities);
+    repository.saveAllAndFlush(priorities);
   }
 
   public List<RequirementPriority> listByTemplateId(Long id) {
-    return repository.findByTemplateId(id);
+    return repository.findByTemplateId(id).stream()
+        .sorted()
+        .toList();
   }
 
   public void deleteByTemplateId(Long templateId) {

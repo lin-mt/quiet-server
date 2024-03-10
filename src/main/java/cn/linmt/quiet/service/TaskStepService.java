@@ -46,7 +46,9 @@ public class TaskStepService {
   }
 
   public List<TaskStep> listByTemplateId(Long id) {
-    return repository.findByTemplateId(id);
+    return repository.findByTemplateId(id).stream()
+        .sorted()
+        .toList();
   }
 
   public void deleteByTemplateId(Long templateId) {

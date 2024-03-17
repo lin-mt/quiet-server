@@ -44,6 +44,14 @@ public enum Result {
   PRO_GROUP_NOT_EXIST(107001, "项目组不存在", MessageType.ERROR_MESSAGE),
   PRO_GROUP_NAME_EXIST(107001, "项目组名已存在", MessageType.WARN_MESSAGE),
   PRO_GROUP_CANT_DELETE_PROJECTS(107002, "项目组下存在项目，无法删除", MessageType.WARN_MESSAGE),
+  /** 108xxx 迭代信息 */
+  VERSION_NOT_EXIST(108000, "不存在该版本信息", MessageType.ERROR_MESSAGE),
+  VERSION_NAME_EXIST(108001, "当前项目下已存在该版本", MessageType.WARN_MESSAGE),
+  VERSION_CANT_DEL_STATE(108002, "该版本已开始，无法删除", MessageType.WARN_MESSAGE),
+  /** 109xxx 迭代信息 */
+  ITERATION_NOT_EXIST(109000, "不存在该迭代信息", MessageType.ERROR_MESSAGE),
+  ITERATION_NAME_EXIST(109001, "当前版本下已存在该迭代", MessageType.WARN_MESSAGE),
+  ITERATION_CANT_DEL_STATE(109002, "该迭代已开始，无法删除", MessageType.WARN_MESSAGE),
   ;
 
   private final Integer code;

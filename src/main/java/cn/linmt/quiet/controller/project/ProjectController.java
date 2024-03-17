@@ -6,11 +6,13 @@ import cn.linmt.quiet.controller.project.dto.ProjectMember;
 import cn.linmt.quiet.controller.project.dto.UpdateProject;
 import cn.linmt.quiet.controller.project.vo.ProjectDetail;
 import cn.linmt.quiet.controller.project.vo.ProjectVO;
+import cn.linmt.quiet.controller.project.vo.SimpleProject;
 import cn.linmt.quiet.entity.Project;
 import cn.linmt.quiet.manager.ProjectManager;
 import cn.linmt.quiet.service.ProjectService;
 import cn.linmt.quiet.service.ProjectUserService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -70,5 +72,11 @@ public class ProjectController {
   @Operation(summary = "删除项目")
   public void deleteProject(@PathVariable Long id) {
     projectManager.delete(id);
+  }
+
+  @GetMapping("/listCurrentUserProject")
+  @Operation(summary = "获取当前用户的项目")
+  public List<SimpleProject> listCurrentUserProject(@RequestParam Long projectGroupId) {
+        return projectManager.listCurrentUserProject(projectGroupId);
   }
 }

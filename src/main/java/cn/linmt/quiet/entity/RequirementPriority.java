@@ -15,7 +15,7 @@ import org.hibernate.annotations.Comment;
 public class RequirementPriority extends SortableEntity {
 
   @Comment("优先级名称")
-  @Column(name = "rp_name", nullable = false, length = 30)
+  @Column(name = "name", nullable = false, length = 30)
   private String name;
 
   @Comment("卡片颜色")

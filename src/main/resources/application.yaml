@@ -13,6 +13,8 @@ spring:
     redis:
       repositories:
         enabled: false
+  jackson:
+    default-property-inclusion: non_null
 quiet:
   dev: true
   admin-username: admin

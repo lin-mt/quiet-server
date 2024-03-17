@@ -15,7 +15,7 @@ import org.hibernate.annotations.Comment;
 public class Template extends BaseEntity {
 
   @Comment("模板名称")
-  @Column(name = "t_name", nullable = false, length = 30)
+  @Column(name = "name", nullable = false, length = 30)
   private String name;
 
   @Comment("模板描述")

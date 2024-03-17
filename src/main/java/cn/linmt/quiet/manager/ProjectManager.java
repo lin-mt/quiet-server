@@ -2,13 +2,15 @@ package cn.linmt.quiet.manager;
 
 import cn.linmt.quiet.controller.project.vo.Member;
 import cn.linmt.quiet.controller.project.vo.ProjectDetail;
+import cn.linmt.quiet.controller.project.vo.SimpleProject;
 import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
 import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
-import cn.linmt.quiet.entity.Project;
-import cn.linmt.quiet.entity.ProjectGroup;
-import cn.linmt.quiet.entity.Template;
-import cn.linmt.quiet.entity.User;
+import cn.linmt.quiet.entity.*;
+import cn.linmt.quiet.framework.Where;
 import cn.linmt.quiet.service.*;
+import cn.linmt.quiet.util.CurrentUser;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +26,7 @@ public class ProjectManager {
   private final ProjectService projectService;
   private final ProjectUserService projectUserService;
   private final UserService userService;
+  private final JPAQueryFactory queryFactory;
   private final TemplateService templateService;
   private final ProjectGroupService projectGroupService;
 
@@ -68,12 +71,38 @@ public class ProjectManager {
       if (!exist.getTemplateId().equals(project.getTemplateId())) {
         // TODO 任务移动
       }
-      boolean reBuild = !exist.getGitAddress().equalsIgnoreCase(project.getGitAddress()) ||
-          !exist.getBuildTool().equals(project.getBuildTool());
+      boolean reBuild =
+          !exist.getGitAddress().equalsIgnoreCase(project.getGitAddress())
+              || !exist.getBuildTool().equals(project.getBuildTool());
       if (reBuild) {
         // TODO 重新构建文档等数据
       }
     }
     return projectService.save(project);
+  }
+
+  public List<SimpleProject> listCurrentUserProject(Long projectGroupId) {
+    QProject project = QProject.project;
+    QProjectGroupUser projectGroupUser = QProjectGroupUser.projectGroupUser;
+    BooleanBuilder predicate =
+        Where.builder()
+            .isIdEq(projectGroupId, projectGroupUser.projectGroupId)
+            .and(projectGroupUser.userId.eq(CurrentUser.getUserId()))
+            .getPredicate();
+    return queryFactory
+        .selectFrom(project)
+        .leftJoin(projectGroupUser)
+        .on(project.projectGroupId.eq(projectGroupUser.projectGroupId))
+        .where(predicate)
+        .fetch()
+        .stream()
+        .map(
+            p -> {
+              SimpleProject simpleProject = new SimpleProject();
+              simpleProject.setId(p.getId());
+              simpleProject.setName(p.getName());
+              return simpleProject;
+            })
+        .toList();
   }
 }

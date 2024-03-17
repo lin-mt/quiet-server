@@ -15,7 +15,7 @@ import org.hibernate.annotations.Comment;
 public class TaskStep extends SortableEntity {
 
   @Comment("步骤名称")
-  @Column(name = "ts_name", nullable = false, length = 30)
+  @Column(name = "name", nullable = false, length = 30)
   private String name;
 
   @Comment("模板ID")

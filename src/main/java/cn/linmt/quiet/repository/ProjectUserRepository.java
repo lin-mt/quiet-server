@@ -8,4 +8,6 @@ public interface ProjectUserRepository extends QuietRepository<ProjectUser> {
   List<ProjectUser> findByProjectId(Long projectId);
 
   void deleteByProjectId(Long projectId);
+
+  List<ProjectUser> findByUserId(Long userId);
 }

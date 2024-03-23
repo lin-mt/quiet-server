@@ -48,10 +48,15 @@ public enum Result {
   VERSION_NOT_EXIST(108000, "不存在该版本信息", MessageType.ERROR_MESSAGE),
   VERSION_NAME_EXIST(108001, "当前项目下已存在该版本", MessageType.WARN_MESSAGE),
   VERSION_CANT_DEL_STATE(108002, "该版本已开始，无法删除", MessageType.WARN_MESSAGE),
+  VERSION_PARENT_ERROR(108003, "版本的父版本不能是其子版本或版本自身", MessageType.WARN_MESSAGE),
   /** 109xxx 迭代信息 */
   ITERATION_NOT_EXIST(109000, "不存在该迭代信息", MessageType.ERROR_MESSAGE),
   ITERATION_NAME_EXIST(109001, "当前版本下已存在该迭代", MessageType.WARN_MESSAGE),
   ITERATION_CANT_DEL_STATE(109002, "该迭代已开始，无法删除", MessageType.WARN_MESSAGE),
+  /** 110xxx 任务类型 */
+  TASK_TYPE_NAME_REPEAT(110000, "任务类型名称出现重复", MessageType.WARN_MESSAGE),
+  /** 111xxx 需求类型 */
+  REQ_TYPE_NAME_REPEAT(111000, "需求类型名称出现重复", MessageType.WARN_MESSAGE),
   ;
 
   private final Integer code;

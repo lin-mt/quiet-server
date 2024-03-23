@@ -26,6 +26,14 @@ public class TemplateDetail {
   private List<TaskStepVO> taskSteps;
 
   @NotEmpty
+  @Schema(description = "任务类型")
+  private List<TaskTypeVO> taskTypes;
+
+  @NotEmpty
   @Schema(description = "需求优先级")
   private List<RequirementPriorityVO> requirementPriorities;
+
+  @NotEmpty
+  @Schema(description = "需求优类型")
+  private List<RequirementTypeVO> requirementTypes;
 }

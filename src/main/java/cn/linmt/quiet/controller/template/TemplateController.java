@@ -4,13 +4,9 @@ import cn.linmt.quiet.controller.template.dto.AddTemplate;
 import cn.linmt.quiet.controller.template.dto.TemplateInfo;
 import cn.linmt.quiet.controller.template.dto.UpdateTemplate;
 import cn.linmt.quiet.controller.template.vo.*;
-import cn.linmt.quiet.entity.RequirementPriority;
-import cn.linmt.quiet.entity.TaskStep;
-import cn.linmt.quiet.entity.Template;
+import cn.linmt.quiet.entity.*;
 import cn.linmt.quiet.manager.TemplateManager;
-import cn.linmt.quiet.service.RequirementPriorityService;
-import cn.linmt.quiet.service.TaskStepService;
-import cn.linmt.quiet.service.TemplateService;
+import cn.linmt.quiet.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
@@ -27,7 +23,9 @@ public class TemplateController {
   private final TemplateManager templateManager;
   private final TemplateService templateService;
   private final TaskStepService taskStepService;
+  private final TaskTypeService taskTypeService;
   private final RequirementPriorityService requirementPriorityService;
+  private final RequirementTypeService requirementTypeService;
 
   @PostMapping
   @Operation(summary = "添加模板")
@@ -88,6 +86,15 @@ public class TemplateController {
                   return taskStepVO;
                 })
             .toList();
+    List<TaskTypeVO> taskTypes =
+        taskTypeService.listByTemplateId(id).stream()
+            .map(
+                type -> {
+                  TaskTypeVO taskTypeVO = new TaskTypeVO();
+                  BeanUtils.copyProperties(type, taskTypeVO);
+                  return taskTypeVO;
+                })
+            .toList();
     List<RequirementPriorityVO> priorityVOS =
         requirementPriorityService.listByTemplateId(id).stream()
             .map(
@@ -97,14 +104,25 @@ public class TemplateController {
                   return priorityVO;
                 })
             .toList();
+    List<RequirementTypeVO> requirementTypeVOS =
+        requirementTypeService.listByTemplateId(id).stream()
+            .map(
+                type -> {
+                  RequirementTypeVO typeVO = new RequirementTypeVO();
+                  BeanUtils.copyProperties(type, typeVO);
+                  return typeVO;
+                })
+            .toList();
     TemplateDetail detail = new TemplateDetail();
     BeanUtils.copyProperties(template, detail);
     detail.setTaskSteps(taskSteps);
+    detail.setTaskTypes(taskTypes);
     detail.setRequirementPriorities(priorityVOS);
+    detail.setRequirementTypes(requirementTypeVOS);
     return detail;
   }
 
-  private <T extends TemplateInfo<?, ?>> Long saveTemplate(T template) {
+  private <T extends TemplateInfo<?, ?, ?, ?>> Long saveTemplate(T template) {
     Template add = new Template();
     BeanUtils.copyProperties(template, add);
     List<TaskStep> taskSteps =
@@ -125,6 +143,24 @@ public class TemplateController {
                   return newPriority;
                 })
             .toList();
-    return templateManager.save(add, taskSteps, priorities);
+    List<TaskType> taskTypes =
+        template.getTaskTypes().stream()
+            .map(
+                type -> {
+                  TaskType taskType = new TaskType();
+                  BeanUtils.copyProperties(type, taskType);
+                  return taskType;
+                })
+            .toList();
+    List<RequirementType> requirementTypes =
+        template.getRequirementTypes().stream()
+            .map(
+                type -> {
+                  RequirementType requirementType = new RequirementType();
+                  BeanUtils.copyProperties(type, requirementType);
+                  return requirementType;
+                })
+            .toList();
+    return templateManager.save(add, taskSteps, taskTypes, priorities, requirementTypes);
   }
 }

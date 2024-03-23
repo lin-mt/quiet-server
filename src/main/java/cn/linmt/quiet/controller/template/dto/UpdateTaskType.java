@@ -7,11 +7,9 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UpdateTemplate
-    extends TemplateInfo<
-        UpdateTaskStep, UpdateTaskType, UpdateRequirementPriority, UpdateRequirementType> {
+public class UpdateTaskType extends AddTaskType {
 
   @NotNull
-  @Schema(description = "模板ID")
+  @Schema(description = "任务类型ID")
   private Long id;
 }

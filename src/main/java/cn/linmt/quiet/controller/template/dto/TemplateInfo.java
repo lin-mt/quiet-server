@@ -8,7 +8,11 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-public class TemplateInfo<TS extends AddTaskStep, RP extends AddRequirementPriority> {
+public class TemplateInfo<
+    TS extends AddTaskStep,
+    TT extends AddTaskType,
+    RP extends AddRequirementPriority,
+    RT extends AddRequirementType> {
 
   @NotBlank
   @Length(max = 30)
@@ -24,6 +28,14 @@ public class TemplateInfo<TS extends AddTaskStep, RP extends AddRequirementPrior
   private List<TS> taskSteps;
 
   @NotEmpty
+  @Schema(description = "任务类型")
+  private List<TT> taskTypes;
+
+  @NotEmpty
   @Schema(description = "需求优先级")
   private List<RP> requirementPriorities;
+
+  @NotEmpty
+  @Schema(description = "需求类型")
+  private List<RT> requirementTypes;
 }

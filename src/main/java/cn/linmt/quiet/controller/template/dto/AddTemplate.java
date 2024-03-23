@@ -5,4 +5,5 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AddTemplate extends TemplateInfo<AddTaskStep, AddRequirementPriority> {}
+public class AddTemplate
+    extends TemplateInfo<AddTaskStep, AddTaskType, AddRequirementPriority, AddRequirementType> {}

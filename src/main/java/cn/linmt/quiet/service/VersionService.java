@@ -4,8 +4,10 @@ import cn.linmt.quiet.entity.Version;
 import cn.linmt.quiet.enums.PlanningStatus;
 import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.VersionRepository;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +25,41 @@ public class VersionService {
     if (exist != null && !exist.getId().equals(version.getId())) {
       Result.VERSION_NAME_EXIST.thr();
     }
+    if (version.getParentId() != null) {
+      List<Version> versions = listByProjectId(version.getProjectId());
+      List<Version> children = getChildren(new ArrayList<>(versions), version.getId());
+      if (children.stream()
+              .map(Version::getId)
+              .collect(Collectors.toSet())
+              .contains(version.getParentId())
+          || version.getParentId().equals(version.getId())) {
+        Result.VERSION_PARENT_ERROR.thr();
+      }
+    }
     return repository.saveAndFlush(version);
+  }
+
+  private List<Version> getChildren(List<Version> versions, Long id) {
+    if (CollectionUtils.isEmpty(versions)) {
+      return new ArrayList<>();
+    }
+    List<Version> children = new ArrayList<>();
+    Iterator<Version> iterator = versions.iterator();
+    Set<Long> childrenIds = new HashSet<>();
+    while (iterator.hasNext()) {
+      Version next = iterator.next();
+      if (id.equals(next.getParentId())) {
+        children.add(next);
+        childrenIds.add(next.getId());
+        iterator.remove();
+      }
+    }
+    if (CollectionUtils.isNotEmpty(childrenIds)) {
+      for (Long childrenId : childrenIds) {
+        children.addAll(getChildren(versions, childrenId));
+      }
+    }
+    return children;
   }
 
   public void delete(Long id) {

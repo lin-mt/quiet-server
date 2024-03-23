@@ -1,14 +1,8 @@
 package cn.linmt.quiet.manager;
 
-import cn.linmt.quiet.entity.Project;
-import cn.linmt.quiet.entity.RequirementPriority;
-import cn.linmt.quiet.entity.TaskStep;
-import cn.linmt.quiet.entity.Template;
+import cn.linmt.quiet.entity.*;
 import cn.linmt.quiet.modal.http.Result;
-import cn.linmt.quiet.service.ProjectService;
-import cn.linmt.quiet.service.RequirementPriorityService;
-import cn.linmt.quiet.service.TaskStepService;
-import cn.linmt.quiet.service.TemplateService;
+import cn.linmt.quiet.service.*;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -21,15 +15,23 @@ public class TemplateManager {
 
   private final TemplateService templateService;
   private final TaskStepService taskStepService;
+  private final TaskTypeService taskTypeService;
   private final ProjectService projectService;
   private final RequirementPriorityService requirementPriorityService;
+  private final RequirementTypeService requirementTypeService;
 
   @Transactional(rollbackFor = Exception.class)
   public Long save(
-      Template template, List<TaskStep> taskSteps, List<RequirementPriority> priorities) {
+      Template template,
+      List<TaskStep> taskSteps,
+      List<TaskType> taskTypes,
+      List<RequirementPriority> priorities,
+      List<RequirementType> requirementTypes) {
     Long templateId = templateService.save(template);
     taskStepService.saveAll(templateId, taskSteps);
+    taskTypeService.saveAll(templateId, taskTypes);
     requirementPriorityService.saveAll(templateId, priorities);
+    requirementTypeService.saveAll(templateId, requirementTypes);
     return templateId;
   }
 
@@ -41,6 +43,8 @@ public class TemplateManager {
     }
     templateService.delete(id);
     taskStepService.deleteByTemplateId(id);
+    taskTypeService.deleteByTemplateId(id);
     requirementPriorityService.deleteByTemplateId(id);
+    requirementTypeService.deleteByTemplateId(id);
   }
 }

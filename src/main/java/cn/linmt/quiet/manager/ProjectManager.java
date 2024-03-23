@@ -77,6 +77,8 @@ public class ProjectManager {
       if (reBuild) {
         // TODO 重新构建文档等数据
       }
+      // TODO 模板出现变更
+      // TODO 构建工具更新则重新构建文档等数据
     }
     return projectService.save(project);
   }

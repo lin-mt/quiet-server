@@ -45,7 +45,7 @@ public class Requirement extends BaseEntity {
   private Long projectId;
 
   @Comment("迭代ID")
-  @Column(name = "iteration_id", nullable = false)
+  @Column(name = "iteration_id")
   private Long iterationId;
 
   @NotNull

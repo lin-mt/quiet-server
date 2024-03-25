@@ -57,7 +57,10 @@ public enum Result {
   TASK_TYPE_NAME_REPEAT(110000, "任务类型名称出现重复", MessageType.WARN_MESSAGE),
   /** 111xxx 需求类型 */
   REQ_TYPE_NAME_REPEAT(111000, "需求类型名称出现重复", MessageType.WARN_MESSAGE),
-  ;
+  /** 112xxx 需求 */
+  REQ_NOT_EXIST(112000, "该需求不存在", MessageType.ERROR_MESSAGE),
+  REQ_TITLE_EXIST(112001, "该项目已存在该需求", MessageType.WARN_MESSAGE),
+  REQ_CANT_CHANGE_PLANNED_STATUS(112002, "无法改变该需求的规划状态", MessageType.WARN_MESSAGE);
 
   private final Integer code;
 

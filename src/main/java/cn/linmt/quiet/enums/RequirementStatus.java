@@ -1,7 +1,8 @@
 package cn.linmt.quiet.enums;
 
 public enum RequirementStatus {
-  INITIALIZATION,
+  TO_BE_PLANNED,
+  PLANNED,
   PROCESSING,
   DONE,
   CLOSED

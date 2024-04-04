@@ -60,7 +60,10 @@ public enum Result {
   /** 112xxx 需求 */
   REQ_NOT_EXIST(112000, "该需求不存在", MessageType.ERROR_MESSAGE),
   REQ_TITLE_EXIST(112001, "该项目已存在该需求", MessageType.WARN_MESSAGE),
-  REQ_CANT_CHANGE_PLANNED_STATUS(112002, "无法改变该需求的规划状态", MessageType.WARN_MESSAGE);
+  REQ_CANT_CHANGE_PLANNED_STATUS(112002, "无法改变该需求的规划状态", MessageType.WARN_MESSAGE),
+  /** 113xxx 任务 */
+  TASK_NOT_EXIST(113000, "该任务不存在", MessageType.ERROR_MESSAGE),
+  TASK_TITLE_EXIST(113001, "该需求下已存在该任务", MessageType.WARN_MESSAGE);
 
   private final Integer code;
 

@@ -1,9 +1,7 @@
 package cn.linmt.quiet.controller.requirement;
 
-import cn.linmt.quiet.controller.requirement.dto.AddRequirement;
-import cn.linmt.quiet.controller.requirement.dto.ListRequirement;
-import cn.linmt.quiet.controller.requirement.dto.PlanningRequirement;
-import cn.linmt.quiet.controller.requirement.dto.UpdateRequirement;
+import cn.linmt.quiet.controller.requirement.dto.*;
+import cn.linmt.quiet.controller.requirement.vo.RequirementTask;
 import cn.linmt.quiet.controller.requirement.vo.RequirementVO;
 import cn.linmt.quiet.entity.Requirement;
 import cn.linmt.quiet.manager.RequirementManager;
@@ -68,6 +66,12 @@ public class RequirementController {
               return vo;
             })
         .toList();
+  }
+
+  @GetMapping("/requirementTask")
+  @Operation(summary = "查询需求任务详情")
+  public List<RequirementTask> requirementTask(ListRequirementTask listRequirementTask) {
+    return requirementManager.requirementTask(listRequirementTask);
   }
 
   @DeleteMapping("/{id}")

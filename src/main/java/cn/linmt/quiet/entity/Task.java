@@ -1,5 +1,6 @@
 package cn.linmt.quiet.entity;
 
+import cn.linmt.quiet.modal.jpa.ApiInfo;
 import cn.linmt.quiet.modal.jpa.base.SortableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
@@ -36,6 +39,16 @@ public class Task extends SortableEntity {
   @Comment("需求ID")
   @Column(name = "requirement_id", nullable = false)
   private Long requirementId;
+
+  @NotNull
+  @Comment("项目ID")
+  @Column(name = "project_id", nullable = false)
+  private Long projectId;
+
+  @Comment("接口信息")
+  @JdbcTypeCode(SqlTypes.JSON)
+  @Column(name = "api_info")
+  private ApiInfo apiInfo;
 
   @NotNull
   @Comment("报告人")

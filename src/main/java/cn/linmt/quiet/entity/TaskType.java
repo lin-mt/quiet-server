@@ -22,6 +22,10 @@ public class TaskType extends SortableEntity {
   @Column(name = "template_id", nullable = false)
   private Long templateId;
 
+  @Comment("是否为后端接口任务")
+  @Column(name = "backend_api")
+  private Boolean backendApi;
+
   @Comment("任务类型描述")
   @Column(name = "description")
   private String description;

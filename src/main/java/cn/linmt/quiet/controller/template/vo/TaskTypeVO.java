@@ -16,6 +16,9 @@ public class TaskTypeVO {
   @Schema(description = "任务类型名称")
   private String name;
 
+  @Schema(description = "是否为后端接口任务")
+  private Boolean backendApi;
+
   @Schema(description = "任务类型描述")
   private String description;
 }

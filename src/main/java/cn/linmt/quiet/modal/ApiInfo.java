@@ -1,4 +1,4 @@
-package cn.linmt.quiet.modal.jpa;
+package cn.linmt.quiet.modal;
 
 import cn.linmt.quiet.enums.HttpMethod;
 import lombok.Data;

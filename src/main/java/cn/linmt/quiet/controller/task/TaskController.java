@@ -2,6 +2,7 @@ package cn.linmt.quiet.controller.task;
 
 import cn.linmt.quiet.controller.task.dto.AddTask;
 import cn.linmt.quiet.controller.task.dto.UpdateTask;
+import cn.linmt.quiet.controller.task.vo.TaskVO;
 import cn.linmt.quiet.entity.Task;
 import cn.linmt.quiet.manager.TaskManager;
 import cn.linmt.quiet.service.TaskService;
@@ -20,10 +21,12 @@ public class TaskController {
 
   @PostMapping
   @Operation(summary = "新建任务")
-  public Long addTask(@RequestBody AddTask addTask) {
+  public TaskVO addTask(@RequestBody AddTask addTask) {
     Task task = new Task();
     BeanUtils.copyProperties(addTask, task);
-    return taskManager.save(task).getId();
+    TaskVO taskVO = new TaskVO();
+    BeanUtils.copyProperties(taskManager.save(task), taskVO);
+    return taskVO;
   }
 
   @PutMapping

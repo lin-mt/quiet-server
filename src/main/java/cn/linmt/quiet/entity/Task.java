@@ -1,6 +1,6 @@
 package cn.linmt.quiet.entity;
 
-import cn.linmt.quiet.modal.jpa.ApiInfo;
+import cn.linmt.quiet.modal.ApiInfo;
 import cn.linmt.quiet.modal.jpa.base.SortableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

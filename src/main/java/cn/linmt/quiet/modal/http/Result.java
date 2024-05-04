@@ -63,7 +63,15 @@ public enum Result {
   REQ_CANT_CHANGE_PLANNED_STATUS(112002, "无法改变该需求的规划状态", MessageType.WARN_MESSAGE),
   /** 113xxx 任务 */
   TASK_NOT_EXIST(113000, "该任务不存在", MessageType.ERROR_MESSAGE),
-  TASK_TITLE_EXIST(113001, "该需求下已存在该任务", MessageType.WARN_MESSAGE);
+  TASK_TITLE_EXIST(113001, "该需求下已存在该任务", MessageType.WARN_MESSAGE),
+  /** 114xxx 接口分组 */
+  ADG_NOT_EXIST(114000, "接口分组不存在", MessageType.ERROR_MESSAGE),
+  ADG_EXIST(114001, "该接口分组名称已存在", MessageType.WARN_MESSAGE),
+  ADG_CANT_DELETE(114002, "该分组下存在接口文档信息，无法删除", MessageType.WARN_MESSAGE),
+  ADG_CANT_DELETE_CHILD(114003, "该分组下存在子分组，无法删除", MessageType.WARN_MESSAGE),
+  /** 115xxx 接口文档 */
+  API_DOCS_EXIST(115000, "已存在该接口文档", MessageType.WARN_MESSAGE),
+  ;
 
   private final Integer code;
 

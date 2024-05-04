@@ -1,6 +1,6 @@
 package cn.linmt.quiet.controller.task.dto;
 
-import cn.linmt.quiet.modal.jpa.ApiInfo;
+import cn.linmt.quiet.modal.ApiInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

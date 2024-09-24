@@ -17,8 +17,8 @@ public class ApiDocsService {
     return apiDocsRepository.findByGroupId(groupId);
   }
 
-  public ApiDocs findByMethodAndPath(HttpMethod method, String path) {
-    return apiDocsRepository.findByMethodAndPath(method, path);
+  public ApiDocs findByMethodAndUri(HttpMethod method, String uri) {
+    return apiDocsRepository.findByMethodAndUri(method, uri);
   }
 
   public ApiDocs save(ApiDocs apiDocs) {

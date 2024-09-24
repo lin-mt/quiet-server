@@ -17,34 +17,29 @@ import org.hibernate.annotations.Comment;
 public class Version extends ParentAndSortableEntity {
 
   @Comment("版本名称")
-  @Column(name = "name", length = 30, nullable = false)
+  @Column(length = 30, nullable = false)
   private String name;
 
   @Comment("项目ID")
-  @Column(name = "project_id", nullable = false)
+  @Column(nullable = false)
   private Long projectId;
 
   @Comment("版本状态")
-  @Column(name = "status", nullable = false)
+  @Column(nullable = false)
   private PlanningStatus status;
 
   @Comment("计划开始时间")
-  @Column(name = "planned_start_time")
   private LocalDateTime plannedStartTime;
 
   @Comment("计划结束时间")
-  @Column(name = "planned_end_time")
   private LocalDateTime plannedEndTime;
 
   @Comment("实际开始时间")
-  @Column(name = "actual_start_time")
   private LocalDateTime actualStartTime;
 
   @Comment("实际结束时间")
-  @Column(name = "actual_end_time")
   private LocalDateTime actualEndTime;
 
   @Comment("版本描述")
-  @Column(name = "description")
   private String description;
 }

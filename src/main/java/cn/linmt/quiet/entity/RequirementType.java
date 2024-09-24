@@ -15,14 +15,13 @@ import org.hibernate.annotations.Comment;
 public class RequirementType extends SortableEntity {
 
   @Comment("需求类型名称")
-  @Column(name = "name", nullable = false, length = 30)
+  @Column(nullable = false, length = 30)
   private String name;
 
   @Comment("模板ID")
-  @Column(name = "template_id", nullable = false)
+  @Column(nullable = false)
   private Long templateId;
 
   @Comment("需求类型描述")
-  @Column(name = "description")
   private String description;
 }

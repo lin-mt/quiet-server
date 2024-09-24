@@ -15,10 +15,9 @@ import org.hibernate.annotations.Comment;
 public class ProjectGroup extends BaseEntity {
 
   @Comment("项目组名称")
-  @Column(name = "name", length = 30, nullable = false)
+  @Column(length = 30, nullable = false)
   private String name;
 
   @Comment("项目组描述")
-  @Column(name = "description")
   private String description;
 }

@@ -7,8 +7,8 @@ import cn.linmt.quiet.entity.ApiDocs;
 import cn.linmt.quiet.entity.ApiDocsGroup;
 import cn.linmt.quiet.entity.QApiDocs;
 import cn.linmt.quiet.entity.QApiDocsGroup;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.service.ApiDocsGroupService;
 import cn.linmt.quiet.service.ApiDocsService;
 import com.querydsl.core.BooleanBuilder;
@@ -33,7 +33,7 @@ public class ApiDocsGroupManager {
   public void delete(Long id) {
     List<ApiDocs> apiDocs = apiDocsService.listByGroupId(id);
     if (CollectionUtils.isNotEmpty(apiDocs)) {
-      Result.ADG_CANT_DELETE.thr();
+      throw new BizException(114002);
     }
     apiDocsGroupService.deleteById(id);
   }
@@ -53,7 +53,7 @@ public class ApiDocsGroupManager {
                             .name
                             .contains(name)
                             .or(apiDocs.name.contains(name))
-                            .or(apiDocs.path.contains(name)));
+                            .or(apiDocs.uri.contains(name)));
                   }
                 })
             .getPredicate();
@@ -103,7 +103,7 @@ public class ApiDocsGroupManager {
               .with(
                   where -> {
                     if (StringUtils.isNotBlank(name)) {
-                      where.and(apiDocs.name.contains(name).or(apiDocs.path.contains(name)));
+                      where.and(apiDocs.name.contains(name).or(apiDocs.uri.contains(name)));
                     }
                   })
               .getPredicate();

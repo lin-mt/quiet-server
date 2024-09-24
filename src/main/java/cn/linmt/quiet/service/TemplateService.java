@@ -3,8 +3,8 @@ package cn.linmt.quiet.service;
 import cn.linmt.quiet.controller.template.vo.PageTemplate;
 import cn.linmt.quiet.entity.QTemplate;
 import cn.linmt.quiet.entity.Template;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.TemplateRepository;
 import com.querydsl.core.BooleanBuilder;
 import java.util.List;
@@ -24,13 +24,13 @@ public class TemplateService {
   public Long save(Template template) {
     Template exist = repository.findByNameIgnoreCase(template.getName());
     if (exist != null && !exist.getId().equals(template.getId())) {
-      Result.TEMPLATE_NAME_EXIST.thr();
+      throw new BizException(104001);
     }
     return repository.save(template).getId();
   }
 
   public Template getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.TEMPLATE_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(104000));
   }
 
   public List<Template> listTemplate(String name) {

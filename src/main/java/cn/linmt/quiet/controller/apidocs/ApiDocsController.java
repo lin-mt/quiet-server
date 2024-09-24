@@ -26,6 +26,7 @@ public class ApiDocsController {
   }
 
   @PutMapping
+  @Operation(summary = "更新接口文档")
   public Long updateApiDocs(@RequestBody UpdateApiDocs update) {
     ApiDocs apiDocs = new ApiDocs();
     BeanUtils.copyProperties(update, apiDocs);

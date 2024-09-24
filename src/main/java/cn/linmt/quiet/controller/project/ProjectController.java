@@ -16,6 +16,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,7 +30,7 @@ public class ProjectController {
 
   @PostMapping
   @Operation(summary = "添加项目")
-  public Long addProject(@RequestBody AddProject project) {
+  public Long addProject(@RequestBody @Validated AddProject project) {
     Project save = new Project();
     BeanUtils.copyProperties(project, save);
     return projectManager.save(save);
@@ -37,7 +38,7 @@ public class ProjectController {
 
   @PutMapping
   @Operation(summary = "更新项目")
-  public Long updateProject(@RequestBody UpdateProject project) {
+  public Long updateProject(@RequestBody @Validated UpdateProject project) {
     Project update = new Project();
     BeanUtils.copyProperties(project, update);
     return projectManager.save(update);
@@ -45,14 +46,14 @@ public class ProjectController {
 
   @PutMapping("/members")
   @Operation(summary = "更新项目成员")
-  public void updateProjectMembers(@RequestBody ProjectMember projectMember) {
+  public void updateProjectMembers(@RequestBody @Validated ProjectMember projectMember) {
     projectUserService.updateProjectMembers(
         projectMember.getProjectId(), projectMember.getMemberIds());
   }
 
   @GetMapping("/page")
   @Operation(summary = "分页查询项目信息")
-  public Page<ProjectVO> pageProject(PageProjectFilter pageProjectFilter) {
+  public Page<ProjectVO> pageProject(@Validated PageProjectFilter pageProjectFilter) {
     Page<Project> projects = projectService.page(pageProjectFilter);
     return projects.map(
         project -> {
@@ -77,6 +78,6 @@ public class ProjectController {
   @GetMapping("/listCurrentUserProject")
   @Operation(summary = "获取当前用户的项目")
   public List<SimpleProject> listCurrentUserProject(@RequestParam Long projectGroupId) {
-        return projectManager.listCurrentUserProject(projectGroupId);
+    return projectManager.listCurrentUserProject(projectGroupId);
   }
 }

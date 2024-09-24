@@ -71,12 +71,7 @@ public class ProjectManager {
       if (!exist.getTemplateId().equals(project.getTemplateId())) {
         // TODO 任务移动
       }
-      boolean reBuild =
-          !exist.getGitAddress().equalsIgnoreCase(project.getGitAddress())
-              || !exist.getBuildTool().equals(project.getBuildTool());
-      if (reBuild) {
-        // TODO 重新构建文档等数据
-      }
+      // TODO 仓库地址变更、重新构建文档等数据
       // TODO 模板出现变更
       // TODO 构建工具更新则重新构建文档等数据
     }

@@ -1,6 +1,6 @@
 package cn.linmt.quiet.controller.task.vo;
 
-import cn.linmt.quiet.modal.ApiInfo;
+import cn.linmt.quiet.modal.Api;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class TaskVO {
   private Long typeId;
 
   @Schema(description = "接口信息")
-  private ApiInfo apiInfo;
+  private Api api;
 
   @NotNull
   @Schema(description = "当前所在的任务步骤ID")

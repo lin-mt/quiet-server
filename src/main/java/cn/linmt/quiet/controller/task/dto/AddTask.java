@@ -1,6 +1,6 @@
 package cn.linmt.quiet.controller.task.dto;
 
-import cn.linmt.quiet.modal.ApiInfo;
+import cn.linmt.quiet.modal.Api;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,7 +35,7 @@ public class AddTask {
   private Long handlerId;
 
   @Schema(description = "接口信息")
-  private ApiInfo apiInfo;
+  private Api api;
 
   @Length(max = 255)
   @Schema(description = "描述")

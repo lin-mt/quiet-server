@@ -3,8 +3,8 @@ package cn.linmt.quiet.service;
 import cn.linmt.quiet.controller.project.dto.PageProjectFilter;
 import cn.linmt.quiet.entity.Project;
 import cn.linmt.quiet.entity.QProject;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.ProjectRepository;
 import com.querydsl.core.BooleanBuilder;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ProjectService {
   private final ProjectRepository repository;
 
   public Project getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.PRO_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(103000));
   }
 
   public void deleteById(Long id) {
@@ -28,14 +28,12 @@ public class ProjectService {
   }
 
   public Page<Project> page(PageProjectFilter filter) {
-
     QProject project = QProject.project;
     BooleanBuilder predicate =
         Where.builder()
             .isIdEq(filter.getId(), project.id)
             .notBlankContains(filter.getName(), project.name)
             .notNullEq(filter.getBuildTool(), project.buildTool)
-            .notBlankContains(filter.getGitAddress(), project.gitAddress)
             .notBlankContains(filter.getDescription(), project.description)
             .getPredicate();
     return repository.findAll(predicate, filter.pageable());
@@ -54,7 +52,7 @@ public class ProjectService {
   public Long save(Project project) {
     Project exist = repository.findByNameIgnoreCase(project.getName());
     if (exist != null && !exist.getId().equals(project.getId())) {
-      Result.PRO_NAME_EXIST.thr();
+      throw new BizException(103001);
     }
     return repository.saveAndFlush(project).getId();
   }

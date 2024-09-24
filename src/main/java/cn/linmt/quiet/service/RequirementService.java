@@ -5,8 +5,8 @@ import cn.linmt.quiet.controller.requirement.dto.PlanningRequirement;
 import cn.linmt.quiet.entity.QRequirement;
 import cn.linmt.quiet.entity.Requirement;
 import cn.linmt.quiet.enums.RequirementStatus;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.RequirementRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -28,7 +28,7 @@ public class RequirementService {
         repository.findByProjectIdAndTitleIgnoreCase(
             requirement.getProjectId(), requirement.getTitle());
     if (exist != null && !exist.getId().equals(requirement.getId())) {
-      Result.REQ_TITLE_EXIST.thr();
+      throw new BizException(112001);
     }
     if (requirement.getId() == null) {
       requirement.setStatus(RequirementStatus.TO_BE_PLANNED);
@@ -69,7 +69,7 @@ public class RequirementService {
     if (!RequirementStatus.PLANNED.equals(requirement.getStatus())
         && !RequirementStatus.TO_BE_PLANNED.equals(requirement.getStatus())) {
       // TODO 可以修改需求的规划状态
-      Result.REQ_CANT_CHANGE_PLANNED_STATUS.thr();
+      throw new BizException(112002);
     }
     Long iterationId = planningRequirement.getIterationId();
     if (iterationId == null) {
@@ -82,6 +82,6 @@ public class RequirementService {
   }
 
   public Requirement findById(Long id) {
-    return repository.findById(id).orElseThrow(Result.REQ_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(112000));
   }
 }

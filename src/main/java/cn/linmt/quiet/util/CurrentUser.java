@@ -2,7 +2,6 @@ package cn.linmt.quiet.util;
 
 import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.modal.app.UserInfo;
-import cn.linmt.quiet.modal.http.Result;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -14,7 +13,7 @@ public class CurrentUser {
     if (authentication.isAuthenticated() && principal instanceof UserInfo userInfo) {
       return userInfo;
     }
-    throw new BizException(Result.UNKNOWN_USER);
+    throw new BizException(900);
   }
 
   public static Long getUserId() {

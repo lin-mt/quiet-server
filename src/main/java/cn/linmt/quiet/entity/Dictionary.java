@@ -19,16 +19,16 @@ public class Dictionary extends ParentAndSortableEntity {
 
   @NotBlank
   @Comment("字典名称")
-  @Column(name = "name", nullable = false, length = 30)
+  @Column(nullable = false, length = 30)
   private String name;
 
   @NotBlank
   @Comment("字典编码")
-  @Column(name = "code", nullable = false, length = 16)
+  @Column(nullable = false, length = 16)
   private String code;
 
   @NotNull
   @Comment("字典类型")
-  @Column(name = "type", nullable = false)
+  @Column(nullable = false)
   private DictionaryType type;
 }

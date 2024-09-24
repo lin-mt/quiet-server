@@ -2,7 +2,7 @@ package cn.linmt.quiet.entity;
 
 import cn.linmt.quiet.enums.ApiDocsState;
 import cn.linmt.quiet.enums.HttpMethod;
-import cn.linmt.quiet.modal.ApiDetail;
+import cn.linmt.quiet.modal.document.ApiEndpointSpec;
 import cn.linmt.quiet.modal.jpa.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,36 +24,31 @@ public class ApiDocs extends BaseEntity {
 
   @Length(max = 30)
   @Comment("名称")
-  @Column(name = "name", length = 30)
+  @Column(length = 30)
   private String name;
 
   @NotNull
   @Comment("请求方法")
-  @Column(name = "method")
   private HttpMethod method;
 
   @NotBlank
   @Comment("请求路径")
-  @Column(name = "path")
-  private String path;
+  private String uri;
 
   @NotNull
   @Comment("接口状态")
-  @Column(name = "state")
   private ApiDocsState state;
 
-  @Comment("接口详细信息")
+  @Comment("接口规范")
   @JdbcTypeCode(SqlTypes.JSON)
-  @Column(name = "detail")
-  private ApiDetail detail;
+  private ApiEndpointSpec apiEndpointSpec;
 
   @NotNull
   @Comment("接口分组ID")
-  @Column(name = "group_id", nullable = false)
+  @Column(nullable = false)
   private Long groupId;
 
   @Length(max = 255)
   @Comment("描述信息")
-  @Column(name = "description")
   private String description;
 }

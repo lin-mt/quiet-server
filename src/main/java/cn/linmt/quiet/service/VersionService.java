@@ -2,7 +2,7 @@ package cn.linmt.quiet.service;
 
 import cn.linmt.quiet.entity.Version;
 import cn.linmt.quiet.enums.PlanningStatus;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.repository.VersionRepository;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,7 +23,7 @@ public class VersionService {
     Version exist =
         repository.findByProjectIdAndNameIgnoreCase(version.getProjectId(), version.getName());
     if (exist != null && !exist.getId().equals(version.getId())) {
-      Result.VERSION_NAME_EXIST.thr();
+      throw new BizException(108001);
     }
     if (version.getParentId() != null) {
       List<Version> versions = listByProjectId(version.getProjectId());
@@ -33,7 +33,7 @@ public class VersionService {
               .collect(Collectors.toSet())
               .contains(version.getParentId())
           || version.getParentId().equals(version.getId())) {
-        Result.VERSION_PARENT_ERROR.thr();
+        throw new BizException(108002);
       }
     }
     return repository.saveAndFlush(version);
@@ -65,13 +65,13 @@ public class VersionService {
   public void delete(Long id) {
     Version version = getById(id);
     if (!PlanningStatus.PLANNED.equals(version.getStatus())) {
-      Result.VERSION_CANT_DEL_STATE.thr();
+      throw new BizException(108002);
     }
     repository.deleteById(id);
   }
 
   public Version getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.VERSION_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(108000));
   }
 
   public List<Version> listByProjectId(Long projectId) {

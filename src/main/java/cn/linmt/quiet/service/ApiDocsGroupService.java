@@ -1,10 +1,9 @@
 package cn.linmt.quiet.service;
 
 import cn.linmt.quiet.entity.ApiDocsGroup;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.repository.ApiDocsGroupRepository;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -21,14 +20,15 @@ public class ApiDocsGroupService {
   }
 
   public void deleteById(Long id) {
-    Optional<ApiDocsGroup> docsGroup = repository.findById(id);
-    docsGroup.ifPresent(
-        apiDocsGroup -> {
-          Long childCount = repository.countByParentId(apiDocsGroup.getId());
-          if (childCount > 1) {
-            Result.ADG_CANT_DELETE_CHILD.thr();
-          }
-        });
+    repository
+        .findById(id)
+        .ifPresent(
+            apiDocsGroup -> {
+              Long childCount = repository.countByParentId(apiDocsGroup.getId());
+              if (childCount > 0) {
+                throw new BizException(114003);
+              }
+            });
     repository.deleteById(id);
   }
 

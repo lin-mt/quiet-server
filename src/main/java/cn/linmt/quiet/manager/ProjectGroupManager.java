@@ -5,8 +5,8 @@ import cn.linmt.quiet.controller.projectgroup.dto.ProjectGroupMember;
 import cn.linmt.quiet.controller.projectgroup.vo.ProjectGroupDetail;
 import cn.linmt.quiet.controller.user.vo.SimpleUser;
 import cn.linmt.quiet.entity.*;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.service.ProjectGroupService;
 import cn.linmt.quiet.service.ProjectGroupUserService;
 import cn.linmt.quiet.service.ProjectService;
@@ -38,7 +38,7 @@ public class ProjectGroupManager {
     ProjectGroup delete = projectGroupService.getById(id);
     List<Project> projects = projectService.listByGroupId(id);
     if (CollectionUtils.isNotEmpty(projects)) {
-      Result.PRO_GROUP_CANT_DELETE_PROJECTS.thr();
+      throw new BizException(107003);
     }
     projectGroupUserService.deleteByProjectGroupId(id);
     projectGroupService.deleteById(delete.getId());

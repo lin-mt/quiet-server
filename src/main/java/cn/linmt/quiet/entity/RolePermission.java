@@ -15,10 +15,10 @@ import org.hibernate.annotations.Comment;
 public class RolePermission extends BaseEntity {
 
   @Comment("角色ID")
-  @Column(name = "role_id", nullable = false)
+  @Column(nullable = false)
   private Long roleId;
 
   @Comment("权限ID")
-  @Column(name = "permission_id", nullable = false)
+  @Column(nullable = false)
   private Long permissionId;
 }

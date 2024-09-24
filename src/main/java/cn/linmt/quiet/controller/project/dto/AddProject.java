@@ -11,5 +11,4 @@ public record AddProject(
     @Schema(description = "模板ID") @NotNull Long templateId,
     @Schema(description = "项目组ID") @NotNull Long projectGroupId,
     @Schema(description = "构建工具") @NotNull BuildTool buildTool,
-    @Schema(description = "git地址") @NotBlank @Length(max = 255) String gitAddress,
     @Schema(description = "项目描述") @Length(max = 255) String description) {}

@@ -7,8 +7,8 @@ import cn.linmt.quiet.entity.User;
 import cn.linmt.quiet.enums.Enabled;
 import cn.linmt.quiet.enums.Expired;
 import cn.linmt.quiet.enums.Locked;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.UserRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -45,7 +45,10 @@ public class UserService {
   public Long registration(User user) {
     repository
         .findByUsernameIgnoreCase(user.getUsername())
-        .ifPresent(exist -> Result.USERNAME_EXIST.thr());
+        .ifPresent(
+            exist -> {
+              throw new BizException(100001);
+            });
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setEnabled(Enabled.YES);
     user.setAccountLocked(Locked.NO);
@@ -75,7 +78,7 @@ public class UserService {
         .ifPresent(
             exist -> {
               if (!exist.getId().equals(user.getId())) {
-                Result.USERNAME_EXIST.thr();
+                throw new BizException(100001);
               }
             });
     return repository.saveAndFlush(user).getId();
@@ -88,7 +91,7 @@ public class UserService {
   }
 
   private User getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.USER_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(100000));
   }
 
   public List<User> listById(Iterable<Long> ids) {

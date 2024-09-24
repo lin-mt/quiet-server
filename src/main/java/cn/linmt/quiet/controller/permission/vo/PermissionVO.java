@@ -33,8 +33,8 @@ public class PermissionVO {
   @Schema(description = "请求方法")
   private HttpMethod httpMethod;
 
-  @Schema(description = "备注")
-  private String remark;
+  @Schema(description = "权限描述")
+  private String description;
 
   @NotBlank
   @Schema(description = "权限值")

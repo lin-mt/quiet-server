@@ -22,22 +22,19 @@ public class Response<T> {
   @Schema(description = "返回数据")
   private final T data;
 
-  private Response(boolean success, Result result, T data) {
+  private Response(boolean success, Integer code, String message, MessageType messageType, T data) {
     this.success = success;
-    this.code = result.getCode();
-    this.message = result.getMessage();
-    this.messageType = result.getMessageType();
+    this.code = code;
+    this.message = message;
+    this.messageType = messageType;
     this.data = data;
   }
 
   public static <T> Response<T> ok(T data) {
-    return new Response<>(true, Result.SUCCESS, data);
+    return new Response<>(true, 200, "成功", MessageType.SILENT, data);
   }
 
-  public static <T> Response<T> fail(Result result) {
-    if (Result.SUCCESS.equals(result)) {
-      throw new IllegalArgumentException();
-    }
-    return new Response<>(false, result, null);
+  public static <T> Response<T> fail(Integer code, String message, MessageType messageType) {
+    return new Response<>(false, code, message, messageType, null);
   }
 }

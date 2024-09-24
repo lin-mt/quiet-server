@@ -21,45 +21,43 @@ public class Requirement extends BaseEntity {
   @NotBlank
   @Comment("需求标题")
   @Length(max = 30)
-  @Column(name = "title", nullable = false, length = 30)
+  @Column(nullable = false, length = 30)
   private String title;
 
   @NotNull
   @Comment("需求类型")
-  @Column(name = "type_id", nullable = false)
+  @Column(nullable = false)
   private Long typeId;
 
   @NotNull
   @Comment("需求状态")
-  @Column(name = "status", nullable = false)
+  @Column(nullable = false)
   private RequirementStatus status;
 
   @NotNull
   @Comment("优先级ID")
-  @Column(name = "priority_id", nullable = false)
+  @Column(nullable = false)
   private Long priorityId;
 
   @NotNull
   @Comment("项目ID")
-  @Column(name = "project_id", nullable = false)
+  @Column(nullable = false)
   private Long projectId;
 
   @Comment("迭代ID")
-  @Column(name = "iteration_id")
   private Long iterationId;
 
   @NotNull
   @Comment("报告人")
-  @Column(name = "reporter_id", nullable = false)
+  @Column(nullable = false)
   private Long reporterId;
 
   @NotNull
   @Comment("处理人")
-  @Column(name = "handler_id", nullable = false)
+  @Column(nullable = false)
   private Long handlerId;
 
   @Length(max = 255)
   @Comment("描述")
-  @Column(name = "description")
   private String description;
 }

@@ -3,8 +3,8 @@ package cn.linmt.quiet.service;
 import cn.linmt.quiet.controller.permission.dto.PagePermission;
 import cn.linmt.quiet.entity.Permission;
 import cn.linmt.quiet.entity.QPermission;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.PermissionRepository;
 import com.querydsl.core.BooleanBuilder;
 import java.util.*;
@@ -32,28 +32,28 @@ public class PermissionService {
         .ifPresent(
             exist -> {
               if (!exist.getId().equals(permission.getId())) {
-                Result.PER_EXIST.thr();
+                throw new BizException(102000);
               }
             });
     Long parentId = permission.getParentId();
     if (parentId != null) {
       if (parentId.equals(permission.getId())) {
-        Result.PER_PARENT_CANT_SELF.thr();
+        throw new BizException(102004);
       }
-      repository.findById(parentId).orElseThrow(Result.PER_PARENT_NOT_EXIST::exc);
+      repository.findById(parentId).orElseThrow(() -> new BizException(102001));
     }
     return repository.save(permission);
   }
 
   public Permission getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.PER_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(102002));
   }
 
   public void delete(Long id) {
     Permission permission = getById(id);
     List<Permission> children = repository.findByParentId(id);
     if (CollectionUtils.isNotEmpty(children)) {
-      Result.PER_CANT_DEL_PAR.thr();
+      throw new BizException(102003);
     }
     repository.delete(permission);
   }
@@ -69,7 +69,7 @@ public class PermissionService {
             .notNullEq(params.getType(), permission.type)
             .notBlankContains(params.getHttpUrl(), permission.httpUrl)
             .notNullEq(params.getHttpMethod(), permission.httpMethod)
-            .notBlankContains(params.getRemark(), permission.remark)
+            .notBlankContains(params.getDescription(), permission.description)
             .getPredicate();
     return repository.findAll(predicate, params.pageable());
   }

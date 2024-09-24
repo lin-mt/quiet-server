@@ -1,7 +1,7 @@
 package cn.linmt.quiet.manager;
 
 import cn.linmt.quiet.entity.*;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.service.*;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class TemplateManager {
   public void delete(Long id) {
     List<Project> projects = projectService.listByTemplateId(id);
     if (CollectionUtils.isNotEmpty(projects)) {
-      Result.TEMPLATE_CNT_DEL_PROJECT.thr();
+      throw new BizException(104002);
     }
     templateService.delete(id);
     taskStepService.deleteByTemplateId(id);

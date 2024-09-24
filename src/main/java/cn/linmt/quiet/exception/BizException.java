@@ -1,12 +1,16 @@
 package cn.linmt.quiet.exception;
 
-import cn.linmt.quiet.modal.http.Result;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public class BizException extends RuntimeException {
 
-  private final Result result;
+  private final Integer code;
+
+  private final Object[] args;
+
+  public BizException(Integer code, Object... args) {
+    this.code = code;
+    this.args = args;
+  }
 }

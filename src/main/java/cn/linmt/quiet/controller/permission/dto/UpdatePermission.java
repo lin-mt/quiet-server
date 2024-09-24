@@ -19,5 +19,5 @@ public record UpdatePermission(
     @Schema(description = "值") @NotBlank @Length(max = 255) String value,
     @Schema(description = "请求地址") @Length(max = 255) String httpUrl,
     @Schema(description = "请求方法") HttpMethod httpMethod,
-    @Schema(description = "备注信息") @Length(max = 255) String remark)
+    @Schema(description = "权限描述") @Length(max = 255) String description)
     implements Serializable {}

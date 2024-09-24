@@ -1,7 +1,7 @@
 package cn.linmt.quiet.service;
 
 import cn.linmt.quiet.entity.Task;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.repository.TaskRepository;
 import java.util.List;
 import java.util.Set;
@@ -31,13 +31,13 @@ public class TaskService {
         repository.findByRequirementIdAndTypeIdAndTitleIgnoreCase(
             task.getRequirementId(), task.getTypeId(), task.getTitle());
     if (exist != null && !exist.getId().equals(task.getId())) {
-      Result.TASK_TITLE_EXIST.thr();
+      throw new BizException(113001);
     }
     return repository.saveAndFlush(task);
   }
 
   public void delete(Long id) {
-    Task task = repository.findById(id).orElseThrow(Result.TASK_NOT_EXIST::exc);
+    Task task = getById(id);
     repository.delete(task);
   }
 
@@ -48,6 +48,6 @@ public class TaskService {
   }
 
   private Task getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.TASK_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(113000));
   }
 }

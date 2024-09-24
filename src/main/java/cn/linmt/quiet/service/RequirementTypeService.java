@@ -1,7 +1,7 @@
 package cn.linmt.quiet.service;
 
 import cn.linmt.quiet.entity.RequirementType;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.repository.RequirementTypeRepository;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +25,7 @@ public class RequirementTypeService {
       RequirementType priority = requirementTypes.get(i);
       Long id = priority.getId();
       if (!names.add(priority.getName())) {
-        Result.REQ_TYPE_NAME_REPEAT.thr();
+        throw new BizException(111000);
       }
       if (id != null) {
         ids.add(id);
@@ -47,9 +47,7 @@ public class RequirementTypeService {
   }
 
   public List<RequirementType> listByTemplateId(Long id) {
-    return repository.findByTemplateId(id).stream()
-        .sorted()
-        .toList();
+    return repository.findByTemplateId(id).stream().sorted().toList();
   }
 
   public void deleteByTemplateId(Long templateId) {

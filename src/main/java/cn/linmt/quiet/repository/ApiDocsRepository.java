@@ -8,5 +8,5 @@ import java.util.List;
 public interface ApiDocsRepository extends QuietRepository<ApiDocs> {
   List<ApiDocs> findByGroupId(Long groupId);
 
-  ApiDocs findByMethodAndPath(HttpMethod method, String path);
+  ApiDocs findByMethodAndUri(HttpMethod method, String uri);
 }

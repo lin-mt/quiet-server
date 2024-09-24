@@ -31,10 +31,6 @@ public class ProjectVO {
   @Schema(description = "构建工具")
   private BuildTool buildTool;
 
-  @NotBlank
-  @Schema(description = "git地址")
-  private String gitAddress;
-
   @Schema(description = "项目描述")
   private String description;
 }

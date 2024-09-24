@@ -1,7 +1,7 @@
 package cn.linmt.quiet.service;
 
 import cn.linmt.quiet.entity.TaskStep;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.repository.TaskStepRepository;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +25,7 @@ public class TaskStepService {
       TaskStep taskStep = taskSteps.get(i);
       Long id = taskStep.getId();
       if (!names.add(taskStep.getName())) {
-        Result.TASK_STEP_NAME_REPEAT.thr();
+        throw new BizException(105000);
       }
       if (id != null) {
         ids.add(id);
@@ -46,9 +46,7 @@ public class TaskStepService {
   }
 
   public List<TaskStep> listByTemplateId(Long id) {
-    return repository.findByTemplateId(id).stream()
-        .sorted()
-        .toList();
+    return repository.findByTemplateId(id).stream().sorted().toList();
   }
 
   public void deleteByTemplateId(Long templateId) {

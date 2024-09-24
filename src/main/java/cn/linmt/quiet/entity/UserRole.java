@@ -15,11 +15,10 @@ import org.hibernate.annotations.Comment;
 public class UserRole extends BaseEntity {
 
   @Comment("用户ID")
-  @Column(name = "user_id", nullable = false)
+  @Column(nullable = false)
   private Long userId;
 
   @Comment("角色ID")
-  @Column(name = "role_id", nullable = false)
+  @Column(nullable = false)
   private Long roleId;
-
 }

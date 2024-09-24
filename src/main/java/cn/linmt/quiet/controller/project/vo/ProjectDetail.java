@@ -4,7 +4,6 @@ import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
 import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
 import cn.linmt.quiet.enums.BuildTool;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,10 +32,6 @@ public class ProjectDetail {
   @NotNull
   @Schema(description = "构建工具")
   private BuildTool buildTool;
-
-  @NotBlank
-  @Schema(description = "git地址")
-  private String gitAddress;
 
   @Schema(description = "项目成员")
   private List<Member> members;

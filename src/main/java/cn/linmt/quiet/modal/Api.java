@@ -4,9 +4,9 @@ import cn.linmt.quiet.enums.HttpMethod;
 import lombok.Data;
 
 @Data
-public class ApiInfo {
+public class Api {
 
   private HttpMethod method;
 
-  private String path;
+  private String uri;
 }

@@ -15,10 +15,10 @@ import org.hibernate.annotations.Comment;
 public class ProjectGroupUser extends BaseEntity {
 
   @Comment("项目组ID")
-  @Column(name = "project_group_id", nullable = false)
+  @Column(nullable = false)
   private Long projectGroupId;
 
   @Comment("用户ID")
-  @Column(name = "user_id", nullable = false)
+  @Column(nullable = false)
   private Long userId;
 }

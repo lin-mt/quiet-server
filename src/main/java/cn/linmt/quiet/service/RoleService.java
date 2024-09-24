@@ -5,8 +5,8 @@ import cn.linmt.quiet.controller.role.dto.PageRole;
 import cn.linmt.quiet.entity.QRole;
 import cn.linmt.quiet.entity.Role;
 import cn.linmt.quiet.enums.RoleCode;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.RoleRepository;
 import com.querydsl.core.BooleanBuilder;
 import java.util.ArrayList;
@@ -62,29 +62,29 @@ public class RoleService {
 
   public Long save(Role role) {
     if (role.getId() != null) {
-      repository.findById(role.getId()).orElseThrow(Result.ROLE_NOT_EXIST::exc);
+      repository.findById(role.getId()).orElseThrow(() -> new BizException(101000));
     }
-    repository.findByValueIgnoreCase(role.getValue()).orElseThrow(Result.ROLE_VALUE_EXIST::exc);
+    repository.findByValueIgnoreCase(role.getValue()).orElseThrow(() -> new BizException(101007));
     if (role.getParentId() == null) {
       role.setParentId(DataInit.RoleId.getAdmin());
     }
     if (role.getParentId().equals(role.getId())) {
-      Result.ROLE_PARENT_CANT_SELF.thr();
+      throw new BizException(101006);
     }
     Role parent =
-        repository.findById(role.getParentId()).orElseThrow(Result.ROLE_PARENT_NOT_EXIST::exc);
+        repository.findById(role.getParentId()).orElseThrow(() -> new BizException(101002));
     role.setCode(parent.getCode() + role.getCode());
     repository
         .findByCode(role.getCode())
         .ifPresent(
             exist -> {
               if (!exist.getId().equals(role.getId())) {
-                Result.ROLE_CODE_EXIST.thr();
+                throw new BizException(101001);
               }
             });
     for (RoleCode roleCode : RoleCode.values()) {
       if (roleCode.getCode().equals(role.getCode())) {
-        Result.ROLE_SYS_CODE.thr();
+        throw new BizException(101004);
       }
     }
     return repository.save(role).getId();
@@ -94,18 +94,18 @@ public class RoleService {
     Role role = getById(id);
     for (RoleCode roleCode : RoleCode.values()) {
       if (roleCode.getCode().equals(role.getCode())) {
-        Result.ROLE_CANT_DEL_SYS.thr();
+        throw new BizException(101005);
       }
     }
     List<Role> children = repository.findByParentId(id);
     if (CollectionUtils.isNotEmpty(children)) {
-      Result.ROLE_CANT_DEL_CHILD.thr();
+      throw new BizException(101003);
     }
     repository.deleteById(id);
   }
 
   public Role getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.ROLE_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(101000));
   }
 
   public List<Role> listByIdContainsChild(List<Long> roleIds) {

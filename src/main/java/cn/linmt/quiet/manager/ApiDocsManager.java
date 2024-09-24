@@ -1,7 +1,7 @@
 package cn.linmt.quiet.manager;
 
 import cn.linmt.quiet.entity.ApiDocs;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.service.ApiDocsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ public class ApiDocsManager {
   private final ApiDocsService apiDocsService;
 
   public ApiDocs save(ApiDocs apiDocs) {
-    ApiDocs exist = apiDocsService.findByMethodAndPath(apiDocs.getMethod(), apiDocs.getPath());
+    ApiDocs exist = apiDocsService.findByMethodAndUri(apiDocs.getMethod(), apiDocs.getUri());
     if (exist != null && !exist.getId().equals(apiDocs.getId())) {
-      Result.API_DOCS_EXIST.thr();
+      throw new BizException(115000);
     }
     return apiDocsService.save(apiDocs);
   }

@@ -3,8 +3,8 @@ package cn.linmt.quiet.service;
 import cn.linmt.quiet.controller.projectgroup.dto.PageProjectGroup;
 import cn.linmt.quiet.entity.ProjectGroup;
 import cn.linmt.quiet.entity.QProjectGroup;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.framework.Where;
-import cn.linmt.quiet.modal.http.Result;
 import cn.linmt.quiet.repository.ProjectGroupRepository;
 import com.querydsl.core.BooleanBuilder;
 import java.util.List;
@@ -22,13 +22,13 @@ public class ProjectGroupService {
   public Long save(ProjectGroup projectGroup) {
     ProjectGroup exist = repository.findByNameIgnoreCase(projectGroup.getName());
     if (exist != null && !exist.getId().equals(projectGroup.getId())) {
-      Result.PRO_GROUP_NAME_EXIST.thr();
+      throw new BizException(107002);
     }
     return repository.saveAndFlush(projectGroup).getId();
   }
 
   public ProjectGroup getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.PRO_GROUP_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(107001));
   }
 
   public void deleteById(Long id) {

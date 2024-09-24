@@ -2,7 +2,7 @@ package cn.linmt.quiet.service;
 
 import cn.linmt.quiet.entity.Iteration;
 import cn.linmt.quiet.enums.PlanningStatus;
-import cn.linmt.quiet.modal.http.Result;
+import cn.linmt.quiet.exception.BizException;
 import cn.linmt.quiet.repository.IterationRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +22,19 @@ public class IterationService {
     Iteration exist =
         repository.findByVersionIdAndNameIgnoreCase(iteration.getVersionId(), iteration.getName());
     if (exist != null && !exist.getId().equals(iteration.getId())) {
-      Result.ITERATION_NAME_EXIST.thr();
+      throw new BizException(109001);
     }
     return repository.save(iteration);
   }
 
   public Iteration getById(Long id) {
-    return repository.findById(id).orElseThrow(Result.ITERATION_NOT_EXIST::exc);
+    return repository.findById(id).orElseThrow(() -> new BizException(109000));
   }
 
   public void deleteById(Long id) {
     Iteration iteration = getById(id);
     if (!PlanningStatus.PLANNED.equals(iteration.getStatus())) {
-      Result.ITERATION_CANT_DEL_STATE.thr();
+      throw new BizException(109002);
     }
   }
 

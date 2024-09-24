@@ -15,18 +15,16 @@ import org.hibernate.annotations.Comment;
 public class TaskType extends SortableEntity {
 
   @Comment("任务类型名称")
-  @Column(name = "name", nullable = false, length = 30)
+  @Column(nullable = false, length = 30)
   private String name;
 
   @Comment("模板ID")
-  @Column(name = "template_id", nullable = false)
+  @Column(nullable = false)
   private Long templateId;
 
   @Comment("是否为后端接口任务")
-  @Column(name = "backend_api")
   private Boolean backendApi;
 
   @Comment("任务类型描述")
-  @Column(name = "description")
   private String description;
 }

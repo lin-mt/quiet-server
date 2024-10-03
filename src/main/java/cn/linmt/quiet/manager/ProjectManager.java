@@ -14,6 +14,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +30,8 @@ public class ProjectManager {
   private final JPAQueryFactory queryFactory;
   private final TemplateService templateService;
   private final ProjectGroupService projectGroupService;
+  private final ProjectRepositoryService projectRepositoryService;
+  private final RepositoryService repositoryService;
 
   public ProjectDetail detail(Long id) {
     Project project = projectService.getById(id);
@@ -56,6 +59,12 @@ public class ProjectManager {
       }
       detail.setMembers(members);
     }
+    detail.setMemberIds(memberIds);
+    Set<Long> repositories =
+        projectRepositoryService.listByProjectId(project.getId()).stream()
+            .map(ProjectRepository::getRepositoryId)
+            .collect(Collectors.toSet());
+    detail.setRepositories(repositories);
     return detail;
   }
 
@@ -64,7 +73,7 @@ public class ProjectManager {
     projectUserService.deleteByProjectId(id);
   }
 
-  public Long save(Project project) {
+  public Long save(Project project, Set<Long> repositories, Set<Long> memberIds) {
     Long id = project.getId();
     if (id != null) {
       Project exist = projectService.getById(id);
@@ -75,7 +84,16 @@ public class ProjectManager {
       // TODO 模板出现变更
       // TODO 构建工具更新则重新构建文档等数据
     }
-    return projectService.save(project);
+    id = projectService.save(project);
+    if (CollectionUtils.isNotEmpty(repositories)) {
+      Set<Long> repositoryIds =
+          repositoryService.findAllByIds(repositories).stream()
+              .map(Repository::getId)
+              .collect(Collectors.toSet());
+      projectRepositoryService.saveAll(project.getId(), repositoryIds);
+    }
+    projectUserService.updateProjectMembers(project.getId(), memberIds);
+    return id;
   }
 
   public List<SimpleProject> listCurrentUserProject(Long projectGroupId) {

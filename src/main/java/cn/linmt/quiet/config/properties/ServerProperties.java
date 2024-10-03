@@ -15,6 +15,9 @@ public class ServerProperties {
   /** 管理员密码 */
   private final String adminPassword;
 
+  /** 加密密钥 */
+  private final String secretKey;
+
   /** 是否是开发环境 */
   private final Boolean dev;
 }

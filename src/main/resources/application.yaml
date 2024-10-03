@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/quiet
-    username: root
+    url: jdbc:postgresql://localhost:5432/quiet
+    username: quiet
     password: KV753t0PpVmpjd2d
     hikari:
       auto-commit: true
@@ -9,9 +9,6 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
   data:
     redis:
       repositories:
@@ -24,6 +21,7 @@ quiet:
   dev: true
   admin-username: admin
   admin-password: hVr37Kqc5C9xkkHaNmEe
+  secret-key: N2d3b2o1Nmxxdzh3aGZqdQ==
 logging:
   level:
     org.hibernate.SQL: DEBUG

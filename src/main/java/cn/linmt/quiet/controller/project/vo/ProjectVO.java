@@ -1,9 +1,9 @@
 package cn.linmt.quiet.controller.project.vo;
 
-import cn.linmt.quiet.enums.BuildTool;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -27,10 +27,10 @@ public class ProjectVO {
   @Schema(description = "项目组ID")
   private Long projectGroupId;
 
-  @NotNull
-  @Schema(description = "构建工具")
-  private BuildTool buildTool;
-
   @Schema(description = "项目描述")
   private String description;
+
+  @NotNull
+  @Schema(description = "创建时间")
+  private LocalDateTime gmtCreate;
 }

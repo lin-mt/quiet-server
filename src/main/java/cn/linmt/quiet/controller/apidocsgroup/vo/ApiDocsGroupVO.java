@@ -1,16 +1,21 @@
 package cn.linmt.quiet.controller.apidocsgroup.vo;
 
+import cn.linmt.quiet.controller.DisabledVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-public class ApiDocsGroupVO {
+@EqualsAndHashCode(callSuper = true)
+public class ApiDocsGroupVO extends DisabledVO {
 
-  @NotNull private Long id;
+  @NotNull
+  @Schema(description = "主键ID")
+  private Long id;
 
   @NotBlank
   @Length(max = 30)

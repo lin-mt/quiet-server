@@ -1,12 +1,15 @@
 package cn.linmt.quiet.controller.user.vo;
 
+import cn.linmt.quiet.controller.DisabledVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class SimpleUser {
+@EqualsAndHashCode(callSuper = true)
+public class SimpleUser extends DisabledVO {
 
   @NotNull
   @Schema(description = "用户ID")

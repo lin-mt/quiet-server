@@ -1,12 +1,15 @@
 package cn.linmt.quiet.controller.template.vo;
 
+import cn.linmt.quiet.controller.DisabledVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class TemplateVO {
+@EqualsAndHashCode(callSuper = true)
+public class TemplateVO extends DisabledVO {
 
   @NotNull
   @Schema(description = "模板ID")

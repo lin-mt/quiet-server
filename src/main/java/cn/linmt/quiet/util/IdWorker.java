@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @SuppressWarnings("ALL")
 public class IdWorker {
 
-  /** Start time cut (2022-11-11) */
-  private final long twepoch = 1668096000000L;
+  /** Start time cut (2024-10-01 00:00:00) */
+  private final long twepoch = 1727280000000L;
 
   /** The number of bits occupied by workerId */
   private final int workerIdBits = 10;
@@ -26,13 +26,16 @@ public class IdWorker {
 
   /** Maximum supported machine id, the result is 1023 */
   private final int maxWorkerId = ~(-1 << workerIdBits);
+
   /** mask that help to extract timestamp and sequence from a long */
   private final long timestampAndSequenceMask = ~(-1L << (timestampBits + sequenceBits));
+
   /**
    * business meaning: machine ID (0 ~ 1023) actual layout in memory: highest 1 bit: 0 middle 10
    * bit: workerId lowest 53 bit: all 0
    */
   private long workerId;
+
   /**
    * timestamp and sequence mix in one Long highest 11 bit: not used middle 41 bit: timestamp lowest
    * 12 bit: sequence

@@ -14,7 +14,7 @@ import org.hibernate.annotations.Comment;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "user_info")
 public class User extends BaseEntity {
 
   @Comment("用户名")

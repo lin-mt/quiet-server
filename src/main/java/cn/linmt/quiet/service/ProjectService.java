@@ -33,7 +33,6 @@ public class ProjectService {
         Where.builder()
             .isIdEq(filter.getId(), project.id)
             .notBlankContains(filter.getName(), project.name)
-            .notNullEq(filter.getBuildTool(), project.buildTool)
             .notBlankContains(filter.getDescription(), project.description)
             .getPredicate();
     return repository.findAll(predicate, filter.pageable());

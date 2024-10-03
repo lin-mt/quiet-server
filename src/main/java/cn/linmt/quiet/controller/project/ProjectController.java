@@ -2,7 +2,6 @@ package cn.linmt.quiet.controller.project;
 
 import cn.linmt.quiet.controller.project.dto.AddProject;
 import cn.linmt.quiet.controller.project.dto.PageProjectFilter;
-import cn.linmt.quiet.controller.project.dto.ProjectMember;
 import cn.linmt.quiet.controller.project.dto.UpdateProject;
 import cn.linmt.quiet.controller.project.vo.ProjectDetail;
 import cn.linmt.quiet.controller.project.vo.ProjectVO;
@@ -10,7 +9,6 @@ import cn.linmt.quiet.controller.project.vo.SimpleProject;
 import cn.linmt.quiet.entity.Project;
 import cn.linmt.quiet.manager.ProjectManager;
 import cn.linmt.quiet.service.ProjectService;
-import cn.linmt.quiet.service.ProjectUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +24,13 @@ public class ProjectController {
 
   private final ProjectService projectService;
   private final ProjectManager projectManager;
-  private final ProjectUserService projectUserService;
 
   @PostMapping
   @Operation(summary = "添加项目")
   public Long addProject(@RequestBody @Validated AddProject project) {
     Project save = new Project();
     BeanUtils.copyProperties(project, save);
-    return projectManager.save(save);
+    return projectManager.save(save, project.repositories(), null);
   }
 
   @PutMapping
@@ -41,14 +38,7 @@ public class ProjectController {
   public Long updateProject(@RequestBody @Validated UpdateProject project) {
     Project update = new Project();
     BeanUtils.copyProperties(project, update);
-    return projectManager.save(update);
-  }
-
-  @PutMapping("/members")
-  @Operation(summary = "更新项目成员")
-  public void updateProjectMembers(@RequestBody @Validated ProjectMember projectMember) {
-    projectUserService.updateProjectMembers(
-        projectMember.getProjectId(), projectMember.getMemberIds());
+    return projectManager.save(update, project.repositories(), project.memberIds());
   }
 
   @GetMapping("/page")

@@ -2,24 +2,16 @@ package cn.linmt.quiet.controller.project.vo;
 
 import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
 import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
-import cn.linmt.quiet.enums.BuildTool;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class ProjectDetail {
-
-  @NotNull
-  @Schema(description = "项目ID")
-  private Long id;
-
-  @Length(max = 30)
-  @Schema(description = "项目名称")
-  private String name;
+@EqualsAndHashCode(callSuper = true)
+public class ProjectDetail extends ProjectVO {
 
   @NotNull
   @Schema(description = "所属项目组")
@@ -29,18 +21,12 @@ public class ProjectDetail {
   @Schema(description = "项目模板")
   private SimpleTemplate template;
 
-  @NotNull
-  @Schema(description = "构建工具")
-  private BuildTool buildTool;
+  @Schema(description = "项目成员ID")
+  private Set<Long> memberIds;
 
   @Schema(description = "项目成员")
   private List<Member> members;
 
-  @Length(max = 255)
-  @Schema(description = "项目描述")
-  private String description;
-
-  @NotNull
-  @Schema(description = "创建时间")
-  private LocalDateTime gmtCreate;
+  @Schema(description = "项目代码仓库")
+  private Set<Long> repositories;
 }

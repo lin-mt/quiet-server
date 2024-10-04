@@ -1,7 +1,9 @@
 package cn.linmt.quiet.manager;
 
+import cn.linmt.quiet.controller.project.dto.ProjectRepositoryDTO;
 import cn.linmt.quiet.controller.project.vo.Member;
 import cn.linmt.quiet.controller.project.vo.ProjectDetail;
+import cn.linmt.quiet.controller.project.vo.ProjectRepositoryVO;
 import cn.linmt.quiet.controller.project.vo.SimpleProject;
 import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
 import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
@@ -11,14 +13,13 @@ import cn.linmt.quiet.service.*;
 import cn.linmt.quiet.util.CurrentUser;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,37 +61,46 @@ public class ProjectManager {
       detail.setMembers(members);
     }
     detail.setMemberIds(memberIds);
-    Set<Long> repositories =
+    Set<Long> repositoryIds = new HashSet<>();
+    List<ProjectRepositoryVO> repositories =
         projectRepositoryService.listByProjectId(project.getId()).stream()
-            .map(ProjectRepository::getRepositoryId)
-            .collect(Collectors.toSet());
+            .peek(r -> repositoryIds.add(r.getRepositoryId()))
+            .map(
+                r -> {
+                  ProjectRepositoryVO vo = new ProjectRepositoryVO();
+                  BeanUtils.copyProperties(r, vo);
+                  return vo;
+                })
+            .toList();
+    detail.setRepositoryIds(repositoryIds);
     detail.setRepositories(repositories);
     return detail;
   }
 
+  @Transactional(rollbackFor = Exception.class)
   public void delete(Long id) {
     projectService.deleteById(id);
     projectUserService.deleteByProjectId(id);
+    projectRepositoryService.deleteByProjectId(id);
   }
 
-  public Long save(Project project, Set<Long> repositories, Set<Long> memberIds) {
-    Long id = project.getId();
-    if (id != null) {
-      Project exist = projectService.getById(id);
-      if (!exist.getTemplateId().equals(project.getTemplateId())) {
-        // TODO 任务移动
-      }
-      // TODO 仓库地址变更、重新构建文档等数据
-      // TODO 模板出现变更
-      // TODO 构建工具更新则重新构建文档等数据
-    }
+  public Long save(Project project, List<ProjectRepositoryDTO> repositories, Set<Long> memberIds) {
+    Long id;
+    // TODO 模板出现变更
+    // TODO 移动任务
+    // TODO 仓库地址变更、重新构建文档等数据
+    // TODO 构建工具更新则重新构建文档等数据
     id = projectService.save(project);
     if (CollectionUtils.isNotEmpty(repositories)) {
       Set<Long> repositoryIds =
-          repositoryService.findAllByIds(repositories).stream()
+          repositoryService
+              .findAllByIds(
+                  repositories.stream().map(ProjectRepositoryDTO::getRepositoryId).toList())
+              .stream()
               .map(Repository::getId)
               .collect(Collectors.toSet());
-      projectRepositoryService.saveAll(project.getId(), repositoryIds);
+      repositories.removeIf(dto -> !repositoryIds.contains(dto.getRepositoryId()));
+      projectRepositoryService.saveAll(project.getId(), repositories);
     }
     projectUserService.updateProjectMembers(project.getId(), memberIds);
     return id;

@@ -9,10 +9,7 @@ import cn.linmt.quiet.framework.Where;
 import cn.linmt.quiet.repository.RepositoryRepository;
 import cn.linmt.quiet.util.EncryptionUtils;
 import com.querydsl.core.BooleanBuilder;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.StreamSupport;
 import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
@@ -81,7 +78,7 @@ public class RepositoryService {
     return StreamSupport.stream(all.spliterator(), false).toList();
   }
 
-  public List<Repository> findAllByIds(Set<Long> ids) {
+  public List<Repository> findAllByIds(Collection<Long> ids) {
     if (CollectionUtils.isEmpty(ids)) {
       return new ArrayList<>();
     }

@@ -27,6 +27,9 @@ public class ProjectDetail extends ProjectVO {
   @Schema(description = "项目成员")
   private List<Member> members;
 
+  @Schema(description = "项目代码仓库Id集合")
+  private Set<Long> repositoryIds;
+
   @Schema(description = "项目代码仓库")
-  private Set<Long> repositories;
+  private List<ProjectRepositoryVO> repositories;
 }

@@ -1,7 +1,7 @@
 package cn.linmt.quiet.controller.repository.dto;
 
 import cn.linmt.quiet.enums.BuildTool;
-import cn.linmt.quiet.modal.RepositoryType;
+import cn.linmt.quiet.enums.RepositoryType;
 import cn.linmt.quiet.modal.http.PageFilter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

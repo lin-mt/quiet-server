@@ -1,4 +1,4 @@
-package cn.linmt.quiet.modal;
+package cn.linmt.quiet.enums;
 
 public enum RepositoryType {
   GITLAB,

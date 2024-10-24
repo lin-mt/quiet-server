@@ -138,4 +138,11 @@ public class Where {
     }
     return this;
   }
+
+  public Where jsonContains(Long param, SetPath<Long, NumberPath<Long>> path) {
+    if (param != null) {
+      builder.and(Expressions.booleanTemplate("JSON_CONTAINS({0}, {1}) > 0", param, path));
+    }
+    return this;
+  }
 }

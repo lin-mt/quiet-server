@@ -1,7 +1,7 @@
 package cn.linmt.quiet.entity;
 
 import cn.linmt.quiet.enums.BuildTool;
-import cn.linmt.quiet.modal.RepositoryType;
+import cn.linmt.quiet.enums.RepositoryType;
 import cn.linmt.quiet.modal.jpa.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

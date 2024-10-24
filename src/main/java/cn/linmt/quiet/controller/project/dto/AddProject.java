@@ -20,15 +20,15 @@ public class AddProject {
   @Schema(description = "模板ID")
   private Long templateId;
 
+  @Schema(description = "项目自动化")
+  private List<ProjectAutomationDTO> automations;
+
   @NotNull
   @Schema(description = "项目组ID")
   private Long projectGroupId;
 
   @Schema(description = "项目成员ID")
   private Set<Long> memberIds;
-
-  @Schema(description = "代码仓库")
-  private List<ProjectRepositoryDTO> repositories;
 
   @Length(max = 255)
   @Schema(description = "项目描述")

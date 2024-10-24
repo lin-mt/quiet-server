@@ -1,7 +1,7 @@
 package cn.linmt.quiet.controller.repository.dto;
 
 import cn.linmt.quiet.enums.BuildTool;
-import cn.linmt.quiet.modal.RepositoryType;
+import cn.linmt.quiet.enums.RepositoryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

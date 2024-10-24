@@ -5,7 +5,7 @@ import cn.linmt.quiet.controller.project.dto.PageProjectFilter;
 import cn.linmt.quiet.controller.project.dto.UpdateProject;
 import cn.linmt.quiet.controller.project.vo.ProjectDetail;
 import cn.linmt.quiet.controller.project.vo.ProjectVO;
-import cn.linmt.quiet.controller.project.vo.SimpleProject;
+import cn.linmt.quiet.controller.project.vo.UserProject;
 import cn.linmt.quiet.entity.Project;
 import cn.linmt.quiet.manager.ProjectManager;
 import cn.linmt.quiet.service.ProjectService;
@@ -30,7 +30,7 @@ public class ProjectController {
   public Long addProject(@RequestBody @Validated AddProject project) {
     Project save = new Project();
     BeanUtils.copyProperties(project, save);
-    return projectManager.save(save, project.getRepositories(), project.getMemberIds());
+    return projectManager.save(save, project.getMemberIds());
   }
 
   @PutMapping
@@ -38,7 +38,7 @@ public class ProjectController {
   public Long updateProject(@RequestBody @Validated UpdateProject project) {
     Project update = new Project();
     BeanUtils.copyProperties(project, update);
-    return projectManager.save(update, project.getRepositories(), project.getMemberIds());
+    return projectManager.save(update, project.getMemberIds());
   }
 
   @GetMapping("/page")
@@ -67,7 +67,7 @@ public class ProjectController {
 
   @GetMapping("/listCurrentUserProject")
   @Operation(summary = "获取当前用户的项目")
-  public List<SimpleProject> listCurrentUserProject(@RequestParam Long projectGroupId) {
-    return projectManager.listCurrentUserProject(projectGroupId);
+  public List<UserProject> listCurrentUserProject() {
+    return projectManager.listCurrentUserProject();
   }
 }

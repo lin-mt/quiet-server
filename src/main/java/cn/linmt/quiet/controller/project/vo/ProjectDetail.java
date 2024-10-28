@@ -1,7 +1,6 @@
 package cn.linmt.quiet.controller.project.vo;
 
 import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
-import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -16,10 +15,6 @@ public class ProjectDetail extends ProjectVO {
   @NotNull
   @Schema(description = "所属项目组")
   private SimpleProjectGroup projectGroup;
-
-  @NotNull
-  @Schema(description = "项目模板")
-  private SimpleTemplate template;
 
   @Schema(description = "项目成员ID")
   private Set<Long> memberIds;

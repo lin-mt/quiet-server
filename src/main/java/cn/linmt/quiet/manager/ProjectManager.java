@@ -2,7 +2,6 @@ package cn.linmt.quiet.manager;
 
 import cn.linmt.quiet.controller.project.vo.*;
 import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
-import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
 import cn.linmt.quiet.entity.*;
 import cn.linmt.quiet.framework.Where;
 import cn.linmt.quiet.service.*;
@@ -25,7 +24,6 @@ public class ProjectManager {
   private final ProjectUserService projectUserService;
   private final UserService userService;
   private final JPAQueryFactory queryFactory;
-  private final TemplateService templateService;
   private final ProjectGroupService projectGroupService;
   private final ProjectGroupUserService projectGroupUserService;
   private final ProjectAutomationService projectAutomationService;
@@ -39,11 +37,6 @@ public class ProjectManager {
     group.setId(projectGroup.getId());
     group.setName(projectGroup.getName());
     detail.setProjectGroup(group);
-    Template template = templateService.getById(project.getTemplateId());
-    SimpleTemplate simpleTemplate = new SimpleTemplate();
-    simpleTemplate.setId(template.getId());
-    simpleTemplate.setName(template.getName());
-    detail.setTemplate(simpleTemplate);
     Set<Long> memberIds = projectUserService.listUserIds(id);
     if (CollectionUtils.isNotEmpty(memberIds)) {
       List<User> users = userService.listById(memberIds);

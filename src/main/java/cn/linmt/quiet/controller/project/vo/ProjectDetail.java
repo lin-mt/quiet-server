@@ -26,4 +26,7 @@ public class ProjectDetail extends ProjectVO {
 
   @Schema(description = "项目成员")
   private List<Member> members;
+
+  @Schema(description = "项目自动化配置")
+  private List<ProjectAutomationVO> automations;
 }

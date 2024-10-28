@@ -28,7 +28,7 @@ public class ProjectUserService {
   }
 
   @Transactional(rollbackOn = Exception.class)
-  public void updateProjectMembers(Long projectId, Set<Long> userIds) {
+  public void saveProjectMembers(Long projectId, Set<Long> userIds) {
     if (CollectionUtils.isEmpty(userIds)) {
       repository.deleteByProjectId(projectId);
       return;

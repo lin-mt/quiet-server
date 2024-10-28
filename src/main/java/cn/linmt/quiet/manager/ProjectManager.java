@@ -1,9 +1,6 @@
 package cn.linmt.quiet.manager;
 
-import cn.linmt.quiet.controller.project.vo.Member;
-import cn.linmt.quiet.controller.project.vo.ProjectDetail;
-import cn.linmt.quiet.controller.project.vo.SimpleProject;
-import cn.linmt.quiet.controller.project.vo.UserProject;
+import cn.linmt.quiet.controller.project.vo.*;
 import cn.linmt.quiet.controller.projectgroup.vo.SimpleProjectGroup;
 import cn.linmt.quiet.controller.template.vo.SimpleTemplate;
 import cn.linmt.quiet.entity.*;
@@ -31,6 +28,7 @@ public class ProjectManager {
   private final TemplateService templateService;
   private final ProjectGroupService projectGroupService;
   private final ProjectGroupUserService projectGroupUserService;
+  private final ProjectAutomationService projectAutomationService;
 
   public ProjectDetail detail(Long id) {
     Project project = projectService.getById(id);
@@ -59,6 +57,17 @@ public class ProjectManager {
       detail.setMembers(members);
     }
     detail.setMemberIds(memberIds);
+    List<ProjectAutomation> projectAutomations = projectAutomationService.listByProjectId(id);
+    List<ProjectAutomationVO> automations =
+        projectAutomations.stream()
+            .map(
+                a -> {
+                  ProjectAutomationVO projectAutomationVO = new ProjectAutomationVO();
+                  BeanUtils.copyProperties(a, projectAutomationVO);
+                  return projectAutomationVO;
+                })
+            .toList();
+    detail.setAutomations(automations);
     return detail;
   }
 
@@ -68,14 +77,17 @@ public class ProjectManager {
     projectUserService.deleteByProjectId(id);
   }
 
-  public Long save(Project project, Set<Long> memberIds) {
+  @Transactional(rollbackFor = Exception.class)
+  public Long save(
+      Project project, Set<Long> memberIds, List<ProjectAutomation> projectAutomations) {
     Long id;
     // TODO 模板出现变更
     // TODO 移动任务
     // TODO 仓库地址变更、重新构建文档等数据
     // TODO 构建工具更新则重新构建文档等数据
     id = projectService.save(project);
-    projectUserService.updateProjectMembers(project.getId(), memberIds);
+    projectUserService.saveProjectMembers(project.getId(), memberIds);
+    projectAutomationService.saveProjectAutomations(project.getId(), projectAutomations);
     return id;
   }
 

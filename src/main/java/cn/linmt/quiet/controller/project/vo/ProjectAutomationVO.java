@@ -1,4 +1,4 @@
-package cn.linmt.quiet.controller.project.dto;
+package cn.linmt.quiet.controller.project.vo;
 
 import cn.linmt.quiet.enums.AutomationAction;
 import cn.linmt.quiet.enums.RequirementStatus;
@@ -9,7 +9,7 @@ import java.util.Set;
 import lombok.Data;
 
 @Data
-public class ProjectAutomationDTO {
+public class ProjectAutomationVO {
 
   @NotNull
   @Schema(description = "触发动作")

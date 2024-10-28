@@ -30,26 +30,27 @@ public class ProjectAutomation extends BaseEntity {
 
   @Comment("需求类型ID集合")
   @JdbcTypeCode(SqlTypes.JSON)
-  private Set<Long> requirementTypeId;
+  private Set<Long> requirementTypeIds;
 
   @Comment("任务类型ID集合")
   @JdbcTypeCode(SqlTypes.JSON)
-  private Set<Long> taskTypeId;
+  private Set<Long> taskTypeIds;
 
   @Comment("前置任务步骤ID")
-  private Long preStepId;
+  private Long preTaskStepId;
 
   @Comment("后置任务步骤ID")
-  private Long afterStepId;
+  private Long afterTaskStepId;
 
   @Comment("前置需求状态")
-  private RequirementStatus preStatus;
+  private RequirementStatus preRequirementStatus;
 
   @Comment("后置需求状态")
-  private RequirementStatus afterStatus;
+  private RequirementStatus afterRequirementStatus;
 
   @Comment("代码仓库ID")
-  private Long repositoryId;
+  @JdbcTypeCode(SqlTypes.JSON)
+  private Set<Long> repositoryIds;
 
   @Comment("自动化动作")
   @Column(nullable = false)
